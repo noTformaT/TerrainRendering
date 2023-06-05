@@ -2,6 +2,9 @@
 
 #include <stdint.h>
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 class Application
 {
 public:
@@ -24,6 +27,8 @@ private:
 	//static void CursorPosCallback(GLFWwindow* window, double x, double y);
 	//static void MouseButtonCallback(GLFWwindow* window, int Button, int Action, int Mode)
 
-
+private:
+	GLFWwindow* window = nullptr;
+	// TODO: Camera
 };
 
