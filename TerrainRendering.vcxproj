@@ -19,6 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ExternalLibs\ImGUI\imgui.cpp" />
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_demo.cpp" />
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_draw.cpp" />
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_tables.cpp" />
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\main.cpp" />
   </ItemGroup>
@@ -95,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,7 +153,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

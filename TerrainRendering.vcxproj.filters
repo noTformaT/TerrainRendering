@@ -15,6 +15,9 @@
     <Filter Include="Source\Private">
       <UniqueIdentifier>{a1548f00-4f2b-4561-b8c0-77f60ee17c83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\ImGui">
+      <UniqueIdentifier>{944e741b-88ce-4937-bf1e-7800140e61e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -22,6 +25,27 @@
     </ClCompile>
     <ClCompile Include="Source\main.cpp">
       <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalLibs\ImGUI\imgui.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_demo.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_draw.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_impl_glfw.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_impl_opengl3.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_tables.cpp">
+      <Filter>Source\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalLibs\ImGUI\imgui_widgets.cpp">
+      <Filter>Source\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

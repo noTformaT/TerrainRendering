@@ -14,18 +14,22 @@ public:
 	void Init();
 	void Run();
 	void RenderScene();
+	void RenderUI();
 	void PassiveMouseCB(int32_t x, int32_t y);
 	void KeyboardCB(uint32_t key, int32_t state);
-	void MouseCB();
+	void MouseCB(int button, int action, int x, int y);
 
 private:
 	void CreateWindow();
 	void InitCallbacks();
 	void InitCamera();
 	void InitTerrain();
-	//static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-	//static void CursorPosCallback(GLFWwindow* window, double x, double y);
-	//static void MouseButtonCallback(GLFWwindow* window, int Button, int Action, int Mode)
+
+	void RenderTest();
+
+	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void CursorPosCallback(GLFWwindow* window, double x, double y);
+	static void MouseButtonCallback(GLFWwindow* window, int Button, int Action, int Mode);
 
 private:
 	GLFWwindow* window = nullptr;

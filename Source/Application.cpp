@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 // windows dimentions
 const GLint WIDTH = 800, HEIGHT = 600;
 
@@ -214,6 +218,13 @@ void Application::Init()
 
 void Application::Run()
 {
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+
     while (window && !glfwWindowShouldClose(window))
     {
         RenderScene();
@@ -221,27 +232,36 @@ void Application::Run()
         glfwPollEvents();
     }
 
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     glfwDestroyWindow(window);
     glfwTerminate();
 }
 
 void Application::RenderScene()
 {
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Clear window
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(shader);
+    RenderTest();
 
-    glBindVertexArray(VAO);
+    RenderUI();
+}
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+void Application::RenderUI()
+{
 
-    glBindVertexArray(0);
-    glUseProgram(0);
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
 
+    ImGui::Begin("Params");
+    ImGui::Text("Hello");
+    ImGui::End();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void Application::PassiveMouseCB(int32_t x, int32_t y)
@@ -253,11 +273,32 @@ void Application::KeyboardCB(uint32_t key, int32_t state)
 {
     if (state == GLFW_PRESS)
     {
+        switch (key) {
 
+            case GLFW_KEY_ESCAPE:
+            case GLFW_KEY_Q:
+                glfwSetWindowShouldClose(window, GL_TRUE);
+
+            case GLFW_KEY_C:
+                //m_pGameCamera->Print();
+                break;
+
+            case GLFW_KEY_W:
+                //m_isWireframe = !m_isWireframe;
+
+                /*if (m_isWireframe) {
+                    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                }
+                else {
+                    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                }*/
+
+            break;
+        }
     }
 }
 
-void Application::MouseCB()
+void Application::MouseCB(int button, int action, int x, int y)
 {
 }
 
@@ -290,6 +331,8 @@ void Application::CreateWindow()
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor_ver);
     }
 
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
     window = glfwCreateWindow(WIDTH, HEIGHT, "TerrainRendering", monitor, NULL);
 
     if (!window) {
@@ -317,12 +360,17 @@ void Application::CreateWindow()
     // Setup viewport size
     glViewport(0, 0, bufferWidth, bufferHeight);
 
+    glfwSetWindowUserPointer(window, this);
+
     CreateTriangle();
     CompileShaders();
 }
 
 void Application::InitCallbacks()
 {
+    glfwSetKeyCallback(window, KeyCallback);
+    glfwSetCursorPosCallback(window, CursorPosCallback);
+    glfwSetMouseButtonCallback(window, MouseButtonCallback);
 }
 
 void Application::InitCamera()
@@ -331,4 +379,39 @@ void Application::InitCamera()
 
 void Application::InitTerrain()
 {
+}
+
+void Application::RenderTest()
+{
+    glUseProgram(shader);
+
+    glBindVertexArray(VAO);
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    glBindVertexArray(0);
+    glUseProgram(0);
+}
+
+void Application::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+
+    app->KeyboardCB(key, action);
+}
+
+void Application::CursorPosCallback(GLFWwindow* window, double x, double y)
+{
+    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    app->PassiveMouseCB(int(x), int(y));
+}
+
+void Application::MouseButtonCallback(GLFWwindow* window, int Button, int Action, int Mode)
+{
+    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    double x, y;
+
+    glfwGetCursorPos(window, &x, &y);
+
+    app->MouseCB(Button, Action, (int)x, (int)y);
 }
