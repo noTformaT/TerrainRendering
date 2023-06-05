@@ -18,6 +18,9 @@
     <Filter Include="Source\ImGui">
       <UniqueIdentifier>{944e741b-88ce-4937-bf1e-7800140e61e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{da8508dd-515f-428b-a2fd-19e8207b09df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -47,10 +50,69 @@
     <ClCompile Include="ExternalLibs\ImGUI\imgui_widgets.cpp">
       <Filter>Source\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Terrain.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Util.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TriangleList.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderSystem.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TerrainRenderSystem.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestRenderSystem.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
       <Filter>Source\Public</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Terrain.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Array2D.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Util.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TriangleList.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderSystem.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TerrainRenderSystem.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestRenderSystem.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\terrain.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\terrain.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\test.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\test.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -27,10 +27,31 @@
     <ClCompile Include="ExternalLibs\ImGUI\imgui_tables.cpp" />
     <ClCompile Include="ExternalLibs\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\RenderSystem.cpp" />
+    <ClCompile Include="Source\Terrain.cpp" />
+    <ClCompile Include="Source\TerrainRenderSystem.cpp" />
+    <ClCompile Include="Source\TestRenderSystem.cpp" />
+    <ClCompile Include="Source\TriangleList.cpp" />
+    <ClCompile Include="Source\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Array2D.h" />
+    <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\RenderSystem.h" />
+    <ClInclude Include="Source\Terrain.h" />
+    <ClInclude Include="Source\TerrainRenderSystem.h" />
+    <ClInclude Include="Source\TestRenderSystem.h" />
+    <ClInclude Include="Source\TriangleList.h" />
+    <ClInclude Include="Source\Util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\terrain.fs" />
+    <None Include="Shaders\terrain.vs" />
+    <None Include="Shaders\test.fs" />
+    <None Include="Shaders\test.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -102,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GLM;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +140,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GLM;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,7 +157,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GLM;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,7 +174,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GML;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/ExternalLibs/ImGUI;$(SolutionDir)/ExternalLibs/GLM;$(SolutionDir)/ExternalLibs/GLFW/include;$(SolutionDir)/ExternalLibs/GLEW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

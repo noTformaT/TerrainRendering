@@ -7,200 +7,19 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 // windows dimentions
-const GLint WIDTH = 800, HEIGHT = 600;
-
-GLuint VBO, VAO, shader;
-
-// Vertex Shader
-static const char* vShader = "                                         \n\
-#version 330                                                           \n\
-layout (location = 0) in vec3 pos;                                       \n\
-                                                                       \n\
-void main()                                                            \n\
-{                                                                      \n\
-    gl_Position = vec4(0.4f * pos.x, 0.4f * pos.y, pos.z, 1.0f);       \n\
-}";
-
-// Fragment Shader
-static const char* fShader = "                      \n\
-#version 330                                        \n\
-out vec4 color;                                     \n\
-                                                    \n\
-void main()                                         \n\
-{                                                   \n\
-    color =  vec4(1.0f, 0.0f, 0.0f, 1.0f);     \n\
-}                                                   \n\
-";
-
-void CreateTriangle()
-{
-    GLfloat vertices[] = {
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f
-    };
-
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-}
-
-void AddShader(GLuint program, const char* shaderCode, GLenum shaderType)
-{
-    GLuint theShader = glCreateShader(shaderType);
-
-    const GLchar* code[1];
-    code[0] = shaderCode;
-
-    GLint codeLength[1];
-    codeLength[0] = strlen(shaderCode);
-
-    glShaderSource(theShader, 1, code, codeLength);
-    glCompileShader(theShader);
-
-    GLint result = 0;
-    GLchar errorLog[128] = { 0 };
-
-    // compile programm
-    glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
-    if (!result)
-    {
-        glGetShaderInfoLog(theShader, sizeof(errorLog), nullptr, errorLog);
-        printf("Error compiling the %d shader: %s\n", shaderType, errorLog);
-        return;
-    }
-
-    glAttachShader(program, theShader);
-}
-
-void CompileShaders()
-{
-    // make program
-    shader = glCreateProgram();
-
-    if (!shader)
-    {
-        printf("Error: Creating shader program!\n");
-        return;
-    }
-
-    // add shader code to programm
-    AddShader(shader, vShader, GL_VERTEX_SHADER);
-    AddShader(shader, fShader, GL_FRAGMENT_SHADER);
-
-    GLint result = 0;
-    GLchar errorLog[128] = { 0 };
-
-    // compiling programm
-    glLinkProgram(shader);
-    glGetProgramiv(shader, GL_LINK_STATUS, &result);
-    if (!result)
-    {
-        glGetProgramInfoLog(shader, sizeof(errorLog), nullptr, errorLog);
-        printf("Error linking program: %s\n", errorLog);
-        return;
-    }
-
-    // validation programm
-    glValidateProgram(shader);
-    glGetProgramiv(shader, GL_VALIDATE_STATUS, &result);
-    if (!result)
-    {
-        glGetProgramInfoLog(shader, sizeof(errorLog), nullptr, errorLog);
-        printf("Error validation program: %s\n", errorLog);
-        return;
-    }
-}
+const GLint WIDTH = 1027, HEIGHT = 768;
 
 Application::Application()
 {
-    /*
-
-    // Initialize GLFW
-    if (!glfwInit())
+    for (size_t i = 0; i < 1024; i++)
     {
-        printf("GLFW Initialization FAILED!");
-        glfwTerminate();
-        //return 1;
+        keys[i] = false;
     }
-
-    // Setup GLFW window properties
-
-    // OpenGL version
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
-    // Core profile = No Backwards Compatibility
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    // Allow forward compatibility
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-    GLFWwindow* mainWindow = glfwCreateWindow(WIDTH, HEIGHT, "Test Window", nullptr, nullptr);
-    if (!mainWindow)
-    {
-        printf("GLFW window creation FAILED!");
-        glfwTerminate();
-        //return 1;
-    }
-
-    // Get buffer size information
-    int bufferWidth, bufferHeight;
-    glfwGetFramebufferSize(mainWindow, &bufferWidth, &bufferHeight);
-
-    // Set context FOR GLEW to use
-    glfwMakeContextCurrent(mainWindow);
-
-    // Allow modern extension features
-    glewExperimental = GL_TRUE;
-
-    if (glewInit() != GLEW_OK)
-    {
-        printf("GLEW Initialization FAILED!");
-        glfwDestroyWindow(mainWindow);
-        glfwTerminate();
-        //return 1;
-    }
-
-    // Setup viewport size
-    glViewport(0, 0, bufferWidth, bufferHeight);
-
-    // Create triangles and shaders
-    CreateTriangle();
-    CompileShaders();
-
-    // Loop until window closed
-    while (!glfwWindowShouldClose(mainWindow))
-    {
-        // Get and hanlde user input events
-        glfwPollEvents();
-
-        // Clear window
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glUseProgram(shader);
-
-        glBindVertexArray(VAO);
-
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
-        glBindVertexArray(0);
-        glUseProgram(0);
-
-        glfwSwapBuffers(mainWindow);
-    }
-    */
 }
 
 Application::~Application()
@@ -227,6 +46,14 @@ void Application::Run()
 
     while (window && !glfwWindowShouldClose(window))
     {
+        GLfloat now = (GLfloat)glfwGetTime();
+        deltaTime = now - lastTime;
+        lastTime = now;
+
+        UpdateMouse();
+        m_pGameCamera.KeyControl(keys, deltaTime);
+        m_pGameCamera.MouseControl(GetMouseXChange(), GetMouseYChange(), deltaTime);
+
         RenderScene();
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -244,7 +71,7 @@ void Application::RenderScene()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    RenderTest();
+    m_terrain.Render(m_pGameCamera);
 
     RenderUI();
 }
@@ -271,12 +98,29 @@ void Application::PassiveMouseCB(int32_t x, int32_t y)
 
 void Application::KeyboardCB(uint32_t key, int32_t state)
 {
+    if (key >= 0 && key < 1024)
+    {
+        if (state == GLFW_PRESS)
+        {
+            keys[key] = true;
+            //printf("Pressed: %d\n", key);
+        }
+        else
+        {
+            if (state == GLFW_RELEASE)
+            {
+                keys[key] = false;
+                //printf("Released: %d\n", key);
+            }
+        }
+    }
+
+
     if (state == GLFW_PRESS)
     {
         switch (key) {
 
             case GLFW_KEY_ESCAPE:
-            case GLFW_KEY_Q:
                 glfwSetWindowShouldClose(window, GL_TRUE);
 
             case GLFW_KEY_C:
@@ -331,6 +175,18 @@ void Application::CreateWindow()
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor_ver);
     }
 
+    // Setup GLFW window properties
+
+    // OpenGL version
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+    // Core profile = No Backwards Compatibility
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    // Allow forward compatibility
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     window = glfwCreateWindow(WIDTH, HEIGHT, "TerrainRendering", monitor, NULL);
@@ -340,7 +196,7 @@ void Application::CreateWindow()
         glfwTerminate();
     }
 
-    int bufferWidth, bufferHeight;
+    //int bufferWidth, bufferHeight;
     glfwGetFramebufferSize(window, &bufferWidth, &bufferHeight);
 
     // Set context FOR GLEW to use
@@ -361,36 +217,28 @@ void Application::CreateWindow()
     glViewport(0, 0, bufferWidth, bufferHeight);
 
     glfwSetWindowUserPointer(window, this);
-
-    CreateTriangle();
-    CompileShaders();
 }
 
 void Application::InitCallbacks()
 {
     glfwSetKeyCallback(window, KeyCallback);
-    glfwSetCursorPosCallback(window, CursorPosCallback);
+    //glfwSetCursorPosCallback(window, CursorPosCallback);
     glfwSetMouseButtonCallback(window, MouseButtonCallback);
+
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void Application::InitCamera()
 {
+    m_pGameCamera = Camera(glm::vec3(10.0f, 12.0f, .0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 2.0f, 0.3f);
+
+    m_pGameCamera.SetProjection(glm::perspective(glm::radians(45.0f), (float)bufferWidth / (float)bufferHeight, 0.1f, 2000.0f));
 }
 
 void Application::InitTerrain()
 {
-}
-
-void Application::RenderTest()
-{
-    glUseProgram(shader);
-
-    glBindVertexArray(VAO);
-
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
-    glBindVertexArray(0);
-    glUseProgram(0);
+    m_terrain.InitTerrain();
+    m_terrain.LoadFromFile("data/heightmap.save");
 }
 
 void Application::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -400,10 +248,21 @@ void Application::KeyCallback(GLFWwindow* window, int key, int scancode, int act
     app->KeyboardCB(key, action);
 }
 
-void Application::CursorPosCallback(GLFWwindow* window, double x, double y)
+void Application::CursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 {
     Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
-    app->PassiveMouseCB(int(x), int(y));
+    if (app->mouseFirstMoved)
+    {
+        app->lastX = (float)xPos;
+        app->lastY = (float)yPos;
+        app->mouseFirstMoved = false;
+    }
+
+    app->xChange = (float)xPos - app->lastX;
+    app->yChange = app->lastY - (float)yPos;
+
+    app->lastX = (float)xPos;
+    app->lastY = (float)yPos;
 }
 
 void Application::MouseButtonCallback(GLFWwindow* window, int Button, int Action, int Mode)
@@ -414,4 +273,25 @@ void Application::MouseButtonCallback(GLFWwindow* window, int Button, int Action
     glfwGetCursorPos(window, &x, &y);
 
     app->MouseCB(Button, Action, (int)x, (int)y);
+}
+
+void Application::UpdateMouse()
+{
+    double xpos, ypos;
+    glfwGetCursorPos(window, &xpos, &ypos);
+    Application::CursorPosCallback(window, xpos, ypos);
+}
+
+GLfloat Application::GetMouseXChange()
+{
+    GLfloat result = xChange;
+    xChange = .0f;
+    return result;
+}
+
+GLfloat Application::GetMouseYChange()
+{
+    GLfloat result = yChange;
+    yChange = .0f;
+    return result;
 }
