@@ -29,6 +29,7 @@ private:
 
 	void CreateGLState();
 	void PopulateBuffers(const BaseTerrain* pTerrain);
+	void InitIndices(std::vector<unsigned int>& indices);
 	void InitVertices(const BaseTerrain* pTerrain, std::vector<Vertex>& vertices);
 
 private:

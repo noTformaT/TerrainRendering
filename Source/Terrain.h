@@ -15,11 +15,14 @@ public:
 
 	//void CreateTriangle();
 
-	void InitTerrain();
+	void InitTerrain(float worldScale);
 	void Render(Camera& camera);
 
 	void LoadFromFile(const char* pFileName);
 
+	float GetHeight(int x, int z) const;
+	float GetWorldScale() const;
+	float GetTerrainSize() const;
 protected:
 	void LoadHeighMapFile(const char* pFileName);
 
@@ -28,4 +31,5 @@ protected:
 	TriangleList m_triangleList;
 	TerrainRenderSystem m_terrainRender;
 	TestRenderSystem m_testRender;
+	float m_worldScale = 1.0f;
 };

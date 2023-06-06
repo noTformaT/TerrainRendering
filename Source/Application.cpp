@@ -33,6 +33,12 @@ void Application::Init()
 	InitCallbacks();
 	InitCamera();
 	InitTerrain();
+
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glFrontFace(GL_CW);
+    glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
 }
 
 void Application::Run()
@@ -54,7 +60,7 @@ void Application::Run()
         m_pGameCamera.KeyControl(keys, deltaTime);
         m_pGameCamera.MouseControl(GetMouseXChange(), GetMouseYChange(), deltaTime);
 
-        RenderScene();
+        RenderScene(deltaTime);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -67,24 +73,39 @@ void Application::Run()
     glfwTerminate();
 }
 
-void Application::RenderScene()
+void Application::RenderScene(float dt)
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_terrain.Render(m_pGameCamera);
 
-    RenderUI();
+    RenderUI(dt);
 }
 
-void Application::RenderUI()
+void Application::RenderUI(float dt)
 {
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    ImGui::Begin("Params");
-    ImGui::Text("Hello");
+    glm::vec3 pos = m_pGameCamera.GetPosition();
+
+    ImGui::Begin("Stats");
+
+    ImGui::Text("RenderTime: %f(ms)", dt);
+    ImGui::Text("FPS: %f", 1.0f / dt);
+
+    ImGui::Text("Terrain width: %f", m_terrain.GetTerrainSize());
+    ImGui::Text("Terrain height: %f", m_terrain.GetTerrainSize());
+    ImGui::Checkbox("Wireframe", &m_isWireframe);
+
+    ImGui::Text("Camera position:");
+    ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
+
+    pos = m_pGameCamera.GetFront();
+    ImGui::Text("Camera direction:");
+    ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
     ImGui::End();
 
     ImGui::Render();
@@ -124,18 +145,14 @@ void Application::KeyboardCB(uint32_t key, int32_t state)
                 glfwSetWindowShouldClose(window, GL_TRUE);
 
             case GLFW_KEY_C:
-                //m_pGameCamera->Print();
-                break;
+                m_isWireframe = !m_isWireframe;
 
-            case GLFW_KEY_W:
-                //m_isWireframe = !m_isWireframe;
-
-                /*if (m_isWireframe) {
+                if (m_isWireframe) {
                     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
                 }
                 else {
                     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-                }*/
+                }
 
             break;
         }
@@ -230,14 +247,15 @@ void Application::InitCallbacks()
 
 void Application::InitCamera()
 {
-    m_pGameCamera = Camera(glm::vec3(10.0f, 12.0f, .0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 2.0f, 0.3f);
+    m_pGameCamera = Camera(glm::vec3(10.0f, 12.0f, .0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
 
     m_pGameCamera.SetProjection(glm::perspective(glm::radians(45.0f), (float)bufferWidth / (float)bufferHeight, 0.1f, 2000.0f));
 }
 
 void Application::InitTerrain()
 {
-    m_terrain.InitTerrain();
+    float worldScale = 4.0f;
+    m_terrain.InitTerrain(worldScale);
     m_terrain.LoadFromFile("data/heightmap.save");
 }
 

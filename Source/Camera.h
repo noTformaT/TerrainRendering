@@ -17,6 +17,10 @@ public:
 
 	void SetProjection(glm::mat4 proj);
 
+	glm::vec3 GetPosition() const;
+	glm::vec3 GetFront() const;
+
+
 	~Camera();
 
 private:

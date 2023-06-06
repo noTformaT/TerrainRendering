@@ -14,8 +14,9 @@ BaseTerrain::~BaseTerrain()
 {
 }
 
-void BaseTerrain::InitTerrain()
+void BaseTerrain::InitTerrain(float worldScale)
 {
+	m_worldScale = worldScale;
 	m_terrainRender.Init();
 }
 
@@ -34,6 +35,21 @@ void BaseTerrain::LoadFromFile(const char* pFileName)
 	LoadHeighMapFile(pFileName);
 
 	m_triangleList.CreateTriangleList(m_terrainSize, m_terrainSize, this);
+}
+
+float BaseTerrain::GetHeight(int x, int z) const
+{
+	return m_heightMap.Get(x, z);
+}
+
+float BaseTerrain::GetWorldScale() const
+{
+	return m_worldScale;
+}
+
+float BaseTerrain::GetTerrainSize() const
+{
+	return m_terrainSize;
 }
 
 void BaseTerrain::LoadHeighMapFile(const char* pFileName)

@@ -17,8 +17,8 @@ public:
 
 	void Init();
 	void Run();
-	void RenderScene();
-	void RenderUI();
+	void RenderScene(float dt);
+	void RenderUI(float dt);
 	void PassiveMouseCB(int32_t x, int32_t y);
 	void KeyboardCB(uint32_t key, int32_t state);
 	void MouseCB(int button, int action, int x, int y);
@@ -57,5 +57,7 @@ private:
 	GLfloat xChange = .0f;
 	GLfloat yChange = .0f;
 	bool mouseFirstMoved = true;
+	bool m_isWireframe = false;
+
 };
 

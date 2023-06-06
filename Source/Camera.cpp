@@ -98,6 +98,16 @@ void Camera::SetProjection(glm::mat4 proj)
 	projection = proj;
 }
 
+glm::vec3 Camera::GetPosition() const
+{
+	return position;
+}
+
+glm::vec3 Camera::GetFront() const
+{
+	return front;
+}
+
 Camera::~Camera()
 {
 
