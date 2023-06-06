@@ -35,10 +35,28 @@ bool TerrainRenderSystem::Init()
 		return false;
 	}
 
+	m_minHeightLoc = GetUniformLocation("minHeight");
+	if (m_minHeightLoc == INVALID_UNIFORM_LOCATION)
+	{
+		return false;
+	}
+
+	m_maxHeightLoc = GetUniformLocation("maxHeight");
+	if (m_minHeightLoc == INVALID_UNIFORM_LOCATION)
+	{
+		return false;
+	}
+
 	return true;
 }
 
 void TerrainRenderSystem::SetVP(const glm::mat4& vp)
 {
 	glUniformMatrix4fv(m_VPLoc, 1, GL_FALSE, glm::value_ptr(vp));
+}
+
+void TerrainRenderSystem::SetMinMaxHeight(float min, float max)
+{
+	glUniform1f(m_minHeightLoc, min);
+	glUniform1f(m_maxHeightLoc, max);
 }

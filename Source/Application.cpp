@@ -247,7 +247,7 @@ void Application::InitCallbacks()
 
 void Application::InitCamera()
 {
-    m_pGameCamera = Camera(glm::vec3(10.0f, 12.0f, .0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
+    m_pGameCamera = Camera(glm::vec3(18.0f, 228, -170.0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
 
     m_pGameCamera.SetProjection(glm::perspective(glm::radians(45.0f), (float)bufferWidth / (float)bufferHeight, 0.1f, 2000.0f));
 }
@@ -256,7 +256,14 @@ void Application::InitTerrain()
 {
     float worldScale = 4.0f;
     m_terrain.InitTerrain(worldScale);
-    m_terrain.LoadFromFile("data/heightmap.save");
+    //m_terrain.LoadFromFile("data/heightmap.save");
+
+
+    int size = 256;
+    int iterration = 500;
+    float minHeight = 0.0f;
+    float maxHeight = 300.0f;
+    m_terrain.CreateFaultFormation(size, iterration, minHeight, maxHeight);
 }
 
 void Application::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)

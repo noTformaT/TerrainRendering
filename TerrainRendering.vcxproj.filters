@@ -71,6 +71,9 @@
     <ClCompile Include="Source\Camera.cpp">
       <Filter>Source\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\FaultFormationTerrain.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -98,6 +101,9 @@
       <Filter>Source\Public</Filter>
     </ClInclude>
     <ClInclude Include="Source\Camera.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FaultFormationTerrain.h">
       <Filter>Source\Public</Filter>
     </ClInclude>
   </ItemGroup>

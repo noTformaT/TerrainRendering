@@ -32,4 +32,6 @@ protected:
 	TerrainRenderSystem m_terrainRender;
 	TestRenderSystem m_testRender;
 	float m_worldScale = 1.0f;
+	float m_minHeight = 0.0f;
+	float m_maxHeight = 0.0f;
 };

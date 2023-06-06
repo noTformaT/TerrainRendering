@@ -5,7 +5,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Terrain.h"
+//#include "Terrain.h"
+#include "FaultFormationTerrain.h"
 
 #include "Camera.h"
 
@@ -39,7 +40,7 @@ private:
 
 private:
 	GLFWwindow* window = nullptr;
-	BaseTerrain m_terrain;
+	FaultFormationTerrain m_terrain;
 	Camera m_pGameCamera;
 
 	GLint bufferWidth;
