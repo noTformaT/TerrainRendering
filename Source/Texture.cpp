@@ -5,6 +5,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+Texture::Texture()
+{
+}
+
 Texture::Texture(GLenum textureTarget, const std::string& fileName)
 {
 	m_textureTarget = textureTarget;

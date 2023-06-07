@@ -4,6 +4,7 @@
 #include "TerrainRenderSystem.h"
 #include "TriangleList.h"
 #include "TestRenderSystem.h"
+#include "Texture.h"
 
 class Camera;
 
@@ -36,4 +37,6 @@ protected:
 	float m_worldScale = 1.0f;
 	float m_minHeight = 0.0f;
 	float m_maxHeight = 0.0f;
+
+	Texture m_myTexture{GL_TEXTURE_2D};
 };

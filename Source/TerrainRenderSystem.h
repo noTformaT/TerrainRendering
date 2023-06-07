@@ -16,4 +16,5 @@ private:
 	GLuint m_VPLoc = -1;
 	GLuint m_minHeightLoc = -1;
 	GLuint m_maxHeightLoc = -1;
+	GLuint m_myTextureLoc = -1;
 };

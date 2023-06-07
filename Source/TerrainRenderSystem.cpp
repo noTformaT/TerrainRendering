@@ -47,6 +47,16 @@ bool TerrainRenderSystem::Init()
 		return false;
 	}
 
+	m_myTextureLoc = GetUniformLocation("myTexture");
+	if (m_myTextureLoc == INVALID_UNIFORM_LOCATION)
+	{
+		return false;
+	}
+
+	Enable();
+
+	glUniform1i(m_myTextureLoc, 0);
+
 	return true;
 }
 

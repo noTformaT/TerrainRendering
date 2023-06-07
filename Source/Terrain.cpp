@@ -18,6 +18,7 @@ void BaseTerrain::InitTerrain(float worldScale)
 {
 	m_worldScale = worldScale;
 	m_terrainRender.Init();
+	m_myTexture.Load("Textures/water.png");
 }
 
 void BaseTerrain::Render(Camera& camera)
@@ -26,6 +27,8 @@ void BaseTerrain::Render(Camera& camera)
 
 	m_terrainRender.Enable();
 	m_terrainRender.SetVP(vp);
+
+	m_myTexture.Bind(0);
 
 	m_triangleList.Render();
 }

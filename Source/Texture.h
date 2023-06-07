@@ -7,6 +7,7 @@
 class Texture
 {
 public:
+	Texture();
 	Texture(GLenum textureTarget, const std::string& fileName);
 	Texture(GLenum textureTarget);
 
