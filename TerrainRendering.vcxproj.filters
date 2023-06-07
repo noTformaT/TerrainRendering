@@ -74,6 +74,15 @@
     <ClCompile Include="Source\FaultFormationTerrain.cpp">
       <Filter>Source\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TerrainTextureGenerator.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Image.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -104,6 +113,15 @@
       <Filter>Source\Public</Filter>
     </ClInclude>
     <ClInclude Include="Source\FaultFormationTerrain.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TerrainTextureGenerator.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Image.h">
       <Filter>Source\Public</Filter>
     </ClInclude>
   </ItemGroup>

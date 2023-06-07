@@ -1,7 +1,8 @@
 #include "Application.h"
 
 #include <stdio.h>
-#include <string.h>
+#include <string>
+#include <vector>
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -289,6 +290,12 @@ void Application::InitTerrain()
     float worldScale = 4.0f;
     m_terrain.InitTerrain(worldScale);
     //m_terrain.LoadFromFile("data/heightmap.save");
+
+    std::vector<std::string> TextureFilenames;
+    TextureFilenames.push_back("../Content/textures/IMGP5525_seamless.jpg");
+    TextureFilenames.push_back("../Content/textures/IMGP5487_seamless.jpg");
+    TextureFilenames.push_back("../Content/textures/tilable-IMG_0044-verydark.png");
+    TextureFilenames.push_back("../Content/textures/water.png");
 
     
     m_terrain.CreateFaultFormation(m_terrain.size, m_terrain.iterration, m_terrain.minHeight, m_terrain.maxHeight, m_terrain.filter);

@@ -71,12 +71,17 @@ void TriangleList::CreateGLState()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib);
 
 	int POS_LOC = 0;
-
-	glEnableVertexAttribArray(POS_LOC);
+	int UV_LOC = 1;
 
 	size_t NumFloats = 0;
+
+	glEnableVertexAttribArray(POS_LOC);
 	glVertexAttribPointer(POS_LOC, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)(NumFloats * sizeof(float)));
 	NumFloats += 3;
+
+	glEnableVertexAttribArray(UV_LOC);
+	glVertexAttribPointer(UV_LOC, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)(NumFloats * sizeof(float)));
+	NumFloats += 2;
 
 	/*glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
@@ -160,4 +165,8 @@ void TriangleList::Vertex::InitVertex(const BaseTerrain* pTerrain, int x, int z)
 	float worldScale = pTerrain->GetWorldScale();
 	float y = pTerrain->GetHeight(x, z);
 	pos = glm::vec3(x * worldScale, y, -z * worldScale);
+	
+	float size = pTerrain->GetTerrainSize();
+
+	uv = glm::vec2((float)x / size, (float)z / size);
 }

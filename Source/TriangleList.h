@@ -24,6 +24,7 @@ private:
 	struct Vertex
 	{
 		glm::vec3 pos;
+		glm::vec2 uv;
 		
 		void InitVertex(const BaseTerrain* pTerrain, int x, int z);
 	};
