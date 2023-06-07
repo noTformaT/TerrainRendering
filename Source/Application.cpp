@@ -57,8 +57,12 @@ void Application::Run()
         lastTime = now;
 
         UpdateMouse();
-        m_pGameCamera.KeyControl(keys, deltaTime);
-        m_pGameCamera.MouseControl(GetMouseXChange(), GetMouseYChange(), deltaTime);
+        
+        if (m_isToogleInput)
+        {
+            m_pGameCamera.KeyControl(keys, deltaTime);
+            m_pGameCamera.MouseControl(GetMouseXChange(), GetMouseYChange(), deltaTime);
+        }
 
         RenderScene(deltaTime);
         glfwSwapBuffers(window);
@@ -98,7 +102,9 @@ void Application::RenderUI(float dt)
 
     ImGui::Text("Terrain width: %f", m_terrain.GetTerrainSize());
     ImGui::Text("Terrain height: %f", m_terrain.GetTerrainSize());
+
     ImGui::Checkbox("Wireframe", &m_isWireframe);
+    ImGui::Checkbox("Input enable", &m_isToogleInput);
 
     ImGui::Text("Camera position:");
     ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
@@ -143,6 +149,7 @@ void Application::KeyboardCB(uint32_t key, int32_t state)
 
             case GLFW_KEY_ESCAPE:
                 glfwSetWindowShouldClose(window, GL_TRUE);
+                break;
 
             case GLFW_KEY_C:
                 m_isWireframe = !m_isWireframe;
@@ -153,6 +160,12 @@ void Application::KeyboardCB(uint32_t key, int32_t state)
                 else {
                     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
                 }
+                break;
+
+            case GLFW_KEY_T:
+                m_isToogleInput = !m_isToogleInput;
+                glfwSetInputMode(window, GLFW_CURSOR, m_isToogleInput ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+                break;
 
             break;
         }
@@ -242,7 +255,10 @@ void Application::InitCallbacks()
     //glfwSetCursorPosCallback(window, CursorPosCallback);
     glfwSetMouseButtonCallback(window, MouseButtonCallback);
 
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    if (m_isToogleInput)
+    {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
 }
 
 void Application::InitCamera()

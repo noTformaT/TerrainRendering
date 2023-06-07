@@ -59,6 +59,7 @@ private:
 	GLfloat yChange = .0f;
 	bool mouseFirstMoved = true;
 	bool m_isWireframe = false;
+	bool m_isToogleInput = false;
 
 };
 
