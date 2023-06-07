@@ -52,6 +52,12 @@ float BaseTerrain::GetTerrainSize() const
 	return m_terrainSize;
 }
 
+void BaseTerrain::Destroy()
+{
+	m_heightMap.Destroy();
+	m_triangleList.Destroy();
+}
+
 void BaseTerrain::LoadHeighMapFile(const char* pFileName)
 {
 	int fileSize = 0;

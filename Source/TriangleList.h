@@ -16,6 +16,8 @@ public:
 
 	void Render();
 
+	void Destroy();
+
 	~TriangleList();
 
 private:

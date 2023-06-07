@@ -27,6 +27,24 @@ void TriangleList::Render()
 	glBindVertexArray(0);
 }
 
+void TriangleList::Destroy()
+{
+	if (m_vao > 0)
+	{
+		glDeleteVertexArrays(1, &m_vao);
+	}
+
+	if (m_vb > 0)
+	{
+		glDeleteBuffers(1, &m_vb);
+	}
+
+	if (m_ib > 0)
+	{
+		glDeleteBuffers(1, &m_ib);
+	}
+}
+
 TriangleList::~TriangleList()
 {
 }

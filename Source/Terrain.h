@@ -23,6 +23,8 @@ public:
 	float GetHeight(int x, int z) const;
 	float GetWorldScale() const;
 	float GetTerrainSize() const;
+
+	void Destroy();
 protected:
 	void LoadHeighMapFile(const char* pFileName);
 

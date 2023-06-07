@@ -8,7 +8,13 @@ public:
 	FaultFormationTerrain();
 	~FaultFormationTerrain();
 
-	void CreateFaultFormation(int terrainSize, int iterations, float minHeight, float maxHeight);
+	void CreateFaultFormation(int terrainSize, int iterations, float minHeight, float maxHeight, float filter);
+
+	int size = 256;
+	int iterration = 500;
+	float minHeight = 0.0f;
+	float maxHeight = 300.0f;
+	float filter = 0.5f;
 
 private:
 	struct TerrainPoint
@@ -24,6 +30,9 @@ private:
 		bool isEqual(TerrainPoint& p) const;
 	};
 
-	void CreateFaultFormationInternal(int iterations, float minHeight, float maxHeight);
+	void CreateFaultFormationInternal(int iterations, float minHeight, float maxHeight, float filter);
 	void GetRandomTerrainPoint(TerrainPoint& p1, TerrainPoint& p2);
+
+	float FIRFilterSinglePoint(int x, int y, float prevVal, float Filter);
+	void ApplyFIRFilter(float filter);
 };

@@ -114,6 +114,22 @@ void Application::RenderUI(float dt)
     ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
     ImGui::End();
 
+
+    ImGui::Begin("Fault formation generator");
+
+    ImGui::SliderInt("Iterations", &m_terrain.iterration, 0, 1000);
+    ImGui::SliderFloat("Max Height", &m_terrain.maxHeight, 0.0f, 1000.0f);
+    ImGui::SliderFloat("Filter", &m_terrain.filter, 0.0f, 1.0f);
+
+    if (ImGui::Button("Generate"))
+    {
+        m_terrain.Destroy();
+        m_terrain.CreateFaultFormation(m_terrain.size, m_terrain.iterration, m_terrain.minHeight, m_terrain.maxHeight, m_terrain.filter);
+    }
+
+    ImGui::End();
+
+
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
@@ -274,12 +290,8 @@ void Application::InitTerrain()
     m_terrain.InitTerrain(worldScale);
     //m_terrain.LoadFromFile("data/heightmap.save");
 
-
-    int size = 256;
-    int iterration = 500;
-    float minHeight = 0.0f;
-    float maxHeight = 300.0f;
-    m_terrain.CreateFaultFormation(size, iterration, minHeight, maxHeight);
+    
+    m_terrain.CreateFaultFormation(m_terrain.size, m_terrain.iterration, m_terrain.minHeight, m_terrain.maxHeight, m_terrain.filter);
 }
 
 void Application::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
