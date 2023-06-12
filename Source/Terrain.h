@@ -6,6 +6,8 @@
 #include "TestRenderSystem.h"
 #include "Texture.h"
 
+#define TEXTURE_COUNT 4
+
 class Camera;
 
 class BaseTerrain
@@ -16,7 +18,7 @@ public:
 
 	//void CreateTriangle();
 
-	void InitTerrain(float worldScale);
+	void InitTerrain(float worldScale, float textureScale, std::vector<std::string>& textureFileNames);
 	void Render(Camera& camera);
 
 	void LoadFromFile(const char* pFileName);
@@ -37,6 +39,6 @@ protected:
 	float m_worldScale = 1.0f;
 	float m_minHeight = 0.0f;
 	float m_maxHeight = 0.0f;
-
-	Texture m_myTexture{GL_TEXTURE_2D};
+	float m_textureScale = 1.0f;
+	Texture* m_pTextures[TEXTURE_COUNT] = { nullptr };
 };

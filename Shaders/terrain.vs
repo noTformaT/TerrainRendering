@@ -4,6 +4,7 @@ layout (location = 1) in vec2 uv;
 
 out vec4 vertexColor;
 out vec2 fragmentUV;
+out vec3 worldPos;
 
 uniform mat4 model;
 uniform float minHeight;
@@ -23,5 +24,6 @@ void main()
 
     vertexColor = vec4(uv.x, uv.y, c * 0.0, 1.0);
 
-    fragmentUV = uv;
+    fragmentUV = uv * 8.0;
+    worldPos = pos;
 }

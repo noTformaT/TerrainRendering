@@ -14,11 +14,26 @@ BaseTerrain::~BaseTerrain()
 {
 }
 
-void BaseTerrain::InitTerrain(float worldScale)
+void BaseTerrain::InitTerrain(float worldScale, float textureScale, std::vector<std::string>& textureFileNames)
 {
+	if (textureFileNames.size() != TEXTURE_COUNT)
+	{
+		printf("%s:%d - number of provided textures (%lud) is not equal to the size of the texture array (%lud)\n",
+			__FILE__, __LINE__, textureFileNames.size(), 4);
+		exit(0);
+	}
+
+	m_textureScale = textureScale;
+
 	m_worldScale = worldScale;
+	
+	for (size_t i = 0; i < TEXTURE_COUNT; i++)
+	{
+		m_pTextures[i] = new Texture(GL_TEXTURE_2D);
+		m_pTextures[i]->Load(textureFileNames[i]);
+	}
+
 	m_terrainRender.Init();
-	m_myTexture.Load("Textures/water.png");
 }
 
 void BaseTerrain::Render(Camera& camera)
@@ -28,7 +43,13 @@ void BaseTerrain::Render(Camera& camera)
 	m_terrainRender.Enable();
 	m_terrainRender.SetVP(vp);
 
-	m_myTexture.Bind(0);
+	for (size_t i = 0; i < TEXTURE_COUNT; i++)
+	{
+		if (m_pTextures[i])
+		{
+			m_pTextures[i]->Bind(GL_TEXTURE0 + i);
+		}
+	}
 
 	m_triangleList.Render();
 }

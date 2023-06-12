@@ -288,14 +288,16 @@ void Application::InitCamera()
 void Application::InitTerrain()
 {
     float worldScale = 4.0f;
-    m_terrain.InitTerrain(worldScale);
-    //m_terrain.LoadFromFile("data/heightmap.save");
+    float textureScale = 4.0f;
 
     std::vector<std::string> TextureFilenames;
-    TextureFilenames.push_back("../Content/textures/IMGP5525_seamless.jpg");
-    TextureFilenames.push_back("../Content/textures/IMGP5487_seamless.jpg");
-    TextureFilenames.push_back("../Content/textures/tilable-IMG_0044-verydark.png");
-    TextureFilenames.push_back("../Content/textures/water.png");
+    TextureFilenames.push_back("Textures/IMGP5525_seamless.jpg");
+    TextureFilenames.push_back("Textures/IMGP5487_seamless.jpg");
+    TextureFilenames.push_back("Textures/tilable-IMG_0044-verydark.png");
+    TextureFilenames.push_back("Textures/water.png");
+
+    m_terrain.InitTerrain(worldScale, textureScale, TextureFilenames);
+    //m_terrain.LoadFromFile("data/heightmap.save");
 
     
     m_terrain.CreateFaultFormation(m_terrain.size, m_terrain.iterration, m_terrain.minHeight, m_terrain.maxHeight, m_terrain.filter);

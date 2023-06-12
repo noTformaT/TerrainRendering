@@ -32,30 +32,44 @@ bool TerrainRenderSystem::Init()
 
 	if (m_VPLoc == INVALID_UNIFORM_LOCATION)
 	{
-		return false;
+		//return false;
 	}
 
 	m_minHeightLoc = GetUniformLocation("minHeight");
 	if (m_minHeightLoc == INVALID_UNIFORM_LOCATION)
 	{
-		return false;
+		//return false;
 	}
 
 	m_maxHeightLoc = GetUniformLocation("maxHeight");
 	if (m_minHeightLoc == INVALID_UNIFORM_LOCATION)
 	{
-		return false;
+		//return false;
 	}
 
-	m_myTextureLoc = GetUniformLocation("myTexture");
-	if (m_myTextureLoc == INVALID_UNIFORM_LOCATION)
+	m_myTexture1Loc = GetUniformLocation("myTexture1");
+	m_myTexture2Loc = GetUniformLocation("myTexture2");
+	m_myTexture3Loc = GetUniformLocation("myTexture3");
+	m_myTexture4Loc = GetUniformLocation("myTexture4");
+	if (m_myTexture1Loc == INVALID_UNIFORM_LOCATION || 
+		m_myTexture2Loc == INVALID_UNIFORM_LOCATION ||
+		m_myTexture3Loc == INVALID_UNIFORM_LOCATION ||
+		m_myTexture4Loc == INVALID_UNIFORM_LOCATION)
 	{
-		return false;
+		//return false;
 	}
+
+	m_tex0HeightLoc = GetUniformLocation("gHeight0");
+	m_tex1HeightLoc = GetUniformLocation("gHeight1");
+	m_tex2HeightLoc = GetUniformLocation("gHeight2");
+	m_tex3HeightLoc = GetUniformLocation("gHeight3");
 
 	Enable();
 
-	glUniform1i(m_myTextureLoc, 0);
+	glUniform1i(m_myTexture1Loc, 0);
+	glUniform1i(m_myTexture2Loc, 1);
+	glUniform1i(m_myTexture3Loc, 2);
+	glUniform1i(m_myTexture4Loc, 3);
 
 	return true;
 }
