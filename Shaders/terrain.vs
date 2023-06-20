@@ -22,7 +22,7 @@ void main()
 
     float c = heightRatio * 0.8 + 0.2;
 
-    vertexColor = vec4(uv.x, uv.y, c * 0.0, 1.0);
+    vertexColor = vec4(c, c, c, 1.0);
 
     fragmentUV = uv * 8.0;
     worldPos = pos;

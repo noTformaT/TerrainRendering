@@ -71,3 +71,35 @@ bool ReadFile(const char* pFileName, std::string& outFile)
 
     return ret;
 }
+
+int CalcNextPowerOfTwo(int x)
+{
+    int ret = 1;
+
+    if (x == 1)
+    {
+        return 2;
+    }
+
+    while (ret < x)
+    {
+        ret = ret * 2;
+    }
+
+    return ret;
+}
+
+float RandomFloat()
+{
+    float max = RAND_MAX;
+    return ((float)RANDOM() / max);
+}
+
+float RandomFloatRange(float start, float end)
+{
+    float delta = end - start;
+
+    float randomValue = RandomFloat() * delta + start;
+
+    return randomValue;
+}

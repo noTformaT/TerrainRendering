@@ -7,6 +7,7 @@
 
 //#include "Terrain.h"
 #include "FaultFormationTerrain.h"
+#include "MidpointDisplacementTerrain.h"
 
 #include "Camera.h"
 
@@ -40,7 +41,8 @@ private:
 
 private:
 	GLFWwindow* window = nullptr;
-	FaultFormationTerrain m_terrain;
+	FaultFormationTerrain m_terrain0;
+	MidpointDisplacementTerrain m_terrain1;
 	Camera m_pGameCamera;
 
 	GLint bufferWidth;
@@ -60,6 +62,8 @@ private:
 	bool mouseFirstMoved = true;
 	bool m_isWireframe = false;
 	bool m_isToogleInput = false;
+
+	int m_terrainIndex = 0;
 
 };
 

@@ -52,7 +52,8 @@ vec4 CalcTexColor()
 void main()
 {
     FragColor = CalcTexColor();
-    //FragColor = vec4(fragmentUV.x, fragmentUV.y, 1.0f, 1.0f);
+    //FragColor = vec4(fragmentUV.x / 5.0f, fragmentUV.y / 5.0f, 1.0f, 1.0f);
+    FragColor = vec4(fragmentUV.x / 5.0f, fragmentUV.y / 5.0f, vertexColor.x, 1.0f);
     /*if(fragmentUV.y > 0.5f)
     {
         if(fragmentUV.x > 0.5f)

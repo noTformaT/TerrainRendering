@@ -73,7 +73,7 @@ float BaseTerrain::GetWorldScale() const
 
 float BaseTerrain::GetTerrainSize() const
 {
-	return m_terrainSize;
+	return (float)m_terrainSize;
 }
 
 void BaseTerrain::Destroy()

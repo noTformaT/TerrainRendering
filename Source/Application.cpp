@@ -82,7 +82,18 @@ void Application::RenderScene(float dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    m_terrain.Render(m_pGameCamera);
+    switch (m_terrainIndex)
+    {
+    case 0:
+        m_terrain0.Render(m_pGameCamera);
+        break;
+    case 1:
+        m_terrain1.Render(m_pGameCamera);
+        break;
+    default:
+        break;
+    }
+    
 
     RenderUI(dt);
 }
@@ -101,8 +112,34 @@ void Application::RenderUI(float dt)
     ImGui::Text("RenderTime: %f(ms)", dt);
     ImGui::Text("FPS: %f", 1.0f / dt);
 
-    ImGui::Text("Terrain width: %f", m_terrain.GetTerrainSize());
-    ImGui::Text("Terrain height: %f", m_terrain.GetTerrainSize());
+    ImGui::Text("Terrain width: %f", 256);
+    ImGui::Text("Terrain height: %f", 256);
+
+    int item;
+
+    const char* fault = "Fault formation";
+    const char* midPoint = "Mid point";
+    const char* data[] = { fault, midPoint };
+    const char* currentItem = data[m_terrainIndex];
+
+    if (ImGui::BeginCombo("Generator", currentItem))
+    {
+        for (size_t i = 0; i < 2; i++)
+        {
+            bool selectable = i == m_terrainIndex;
+            if (ImGui::Selectable(data[i], selectable))
+            {
+                m_terrainIndex = i;
+            }
+
+            if (selectable)
+            {
+                ImGui::SetItemDefaultFocus();
+            }
+        }
+
+        ImGui::EndCombo();
+    }
 
     ImGui::Checkbox("Wireframe", &m_isWireframe);
     ImGui::Checkbox("Input enable", &m_isToogleInput);
@@ -115,21 +152,40 @@ void Application::RenderUI(float dt)
     ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
     ImGui::End();
 
-
-    ImGui::Begin("Fault formation generator");
-
-    ImGui::SliderInt("Iterations", &m_terrain.iterration, 0, 1000);
-    ImGui::SliderFloat("Max Height", &m_terrain.maxHeight, 0.0f, 1000.0f);
-    ImGui::SliderFloat("Filter", &m_terrain.filter, 0.0f, 1.0f);
-
-    if (ImGui::Button("Generate"))
+    if (m_terrainIndex == 0)
     {
-        m_terrain.Destroy();
-        m_terrain.CreateFaultFormation(m_terrain.size, m_terrain.iterration, m_terrain.minHeight, m_terrain.maxHeight, m_terrain.filter);
+        ImGui::Begin("Fault formation generator");
+
+        ImGui::SliderInt("Iterations", &m_terrain0.iterration, 0, 1000);
+        ImGui::SliderFloat("Max Height", &m_terrain0.maxHeight, 0.0f, 1000.0f);
+        ImGui::SliderFloat("Filter", &m_terrain0.filter, 0.0f, 1.0f);
+
+        if (ImGui::Button("Generate"))
+        {
+            m_terrain0.Destroy();
+            m_terrain0.CreateFaultFormation(m_terrain0.size, m_terrain0.iterration, m_terrain0.minHeight, m_terrain0.maxHeight, m_terrain0.filter);
+        }
+
+        ImGui::End();
     }
+    else
+    {
+        if (m_terrainIndex == 1)
+        {
+            ImGui::Begin("Midpoint displacement generator");
 
-    ImGui::End();
+            ImGui::SliderFloat("Roughness", &m_terrain1.roughness, 0.0f, 2.0f);
+            ImGui::SliderFloat("Max Height", &m_terrain1.maxHeight, 0.0f, 1000.0f);
 
+            if (ImGui::Button("Generate"))
+            {
+                m_terrain1.Destroy();
+                m_terrain1.CreateMidpoinDisplacement(m_terrain1.size, m_terrain1.roughness, m_terrain1.minHeight, m_terrain1.maxHeight);
+            }
+
+            ImGui::End();
+        }
+    }
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -296,11 +352,14 @@ void Application::InitTerrain()
     TextureFilenames.push_back("Textures/tilable-IMG_0044-verydark.png");
     TextureFilenames.push_back("Textures/water.png");
 
-    m_terrain.InitTerrain(worldScale, textureScale, TextureFilenames);
     //m_terrain.LoadFromFile("data/heightmap.save");
 
-    
-    m_terrain.CreateFaultFormation(m_terrain.size, m_terrain.iterration, m_terrain.minHeight, m_terrain.maxHeight, m_terrain.filter);
+    m_terrain0.InitTerrain(worldScale, textureScale, TextureFilenames);
+    m_terrain0.CreateFaultFormation(m_terrain0.size, m_terrain0.iterration, m_terrain0.minHeight, m_terrain0.maxHeight, m_terrain0.filter);
+
+
+    m_terrain1.InitTerrain(worldScale, textureScale, TextureFilenames);
+    m_terrain1.CreateMidpoinDisplacement(m_terrain1.size, m_terrain1.roughness, m_terrain1.minHeight, m_terrain1.maxHeight);
 }
 
 void Application::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)

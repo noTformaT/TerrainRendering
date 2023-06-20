@@ -14,7 +14,7 @@ public:
 	int iterration = 500;
 	float minHeight = 0.0f;
 	float maxHeight = 300.0f;
-	float filter = 0.5f;
+	float filter = 0.4f;
 
 private:
 	struct TerrainPoint
