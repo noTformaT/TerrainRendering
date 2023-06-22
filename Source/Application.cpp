@@ -107,49 +107,141 @@ void Application::RenderUI(float dt)
 
     glm::vec3 pos = m_pGameCamera.GetPosition();
 
-    ImGui::Begin("Stats");
+    ImGui::Begin("Options");
 
-    ImGui::Text("RenderTime: %f(ms)", dt);
-    ImGui::Text("FPS: %f", 1.0f / dt);
-
-    ImGui::Text("Terrain width: %f", 256);
-    ImGui::Text("Terrain height: %f", 256);
-
-    int item;
-
-    const char* fault = "Fault formation";
-    const char* midPoint = "Mid point";
-    const char* data[] = { fault, midPoint };
-    const char* currentItem = data[m_terrainIndex];
-
-    if (ImGui::BeginCombo("Generator", currentItem))
+    if (ImGui::CollapsingHeader("Stats"))
     {
-        for (size_t i = 0; i < 2; i++)
+
+        ImGui::Text("RenderTime: %f(ms)", dt);
+        ImGui::Text("FPS: %f", 1.0f / dt);
+
+        ImGui::Text("Terrain width: %f", 256);
+        ImGui::Text("Terrain height: %f", 256);
+
+        int item;
+
+        const char* fault = "Fault formation";
+        const char* midPoint = "Mid point";
+        const char* data[] = { fault, midPoint };
+        const char* currentItem = data[m_terrainIndex];
+
+        if (ImGui::BeginCombo("Generator", currentItem))
         {
-            bool selectable = i == m_terrainIndex;
-            if (ImGui::Selectable(data[i], selectable))
+            for (size_t i = 0; i < 2; i++)
             {
-                m_terrainIndex = i;
+                bool selectable = i == m_terrainIndex;
+                if (ImGui::Selectable(data[i], selectable))
+                {
+                    m_terrainIndex = i;
+                }
+
+                if (selectable)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
             }
 
-            if (selectable)
+            ImGui::EndCombo();
+        }
+
+        ImGui::Checkbox("Wireframe", &m_isWireframe);
+        ImGui::Checkbox("Input enable", &m_isToogleInput);
+
+        ImGui::Text("Camera position:");
+        ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
+
+        pos = m_pGameCamera.GetFront();
+        ImGui::Text("Camera direction:");
+        ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
+    }
+
+    if (ImGui::CollapsingHeader("Layers Settings"))
+    {
+        float hs0 = h0;
+        float hs1 = h1;
+        float hs2 = h2;
+        float hs3 = h3;
+        float hs4 = h4;
+        float hs5 = h5;
+
+
+        ImGui::SliderFloat("Layer 0 end", &hs0, 0.0f, 1.0f);
+        ImGui::SliderFloat("Layer 1 begin", &hs1, 0.0f, 1.0f);
+        ImGui::SliderFloat("Layer 1 end", &hs2, 0.0f, 1.0f);
+        ImGui::SliderFloat("Layer 2 begin", &hs3, 0.0f, 1.0f);
+        ImGui::SliderFloat("Layer 2 end", &hs4, 0.0f, 1.0f);
+        ImGui::SliderFloat("Layer 3 begin", &hs5, 0.0f, 1.0f);
+
+        if (hs0 > hs1)
+        {
+            if (hs0 != h0)
             {
-                ImGui::SetItemDefaultFocus();
+                hs1 = hs0;
+            }
+            else
+            {
+                hs0 = hs1;
             }
         }
 
-        ImGui::EndCombo();
+        if (hs1 > hs2)
+        {
+            if (hs1 != h1)
+            {
+                hs2 = hs1;
+            }
+            else
+            {
+                hs1 = hs2;
+            }
+        }
+
+        if (hs2 > hs3)
+        {
+            if (hs2 != h2)
+            {
+                hs3 = hs2;
+            }
+            else
+            {
+                hs2 = hs3;
+            }
+        }
+
+        if (hs3 > hs4)
+        {
+            if (hs3 != h3)
+            {
+                hs4 = hs3;
+            }
+            else
+            {
+                hs3 = hs4;
+            }
+        }
+
+        if (hs4 > hs5)
+        {
+            if (hs4 != h4)
+            {
+                hs5 = hs4;
+            }
+            else
+            {
+                hs4 = hs5;
+            }
+        }
+
+
+        h0 = hs0;
+        h1 = hs1;
+        h2 = hs2;
+        h3 = hs3;
+        h4 = hs4;
+        h5 = hs5;
+        
     }
 
-    ImGui::Checkbox("Wireframe", &m_isWireframe);
-    ImGui::Checkbox("Input enable", &m_isToogleInput);
-
-    ImGui::Text("Camera position:");
-    ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
-
-    pos = m_pGameCamera.GetFront();
-    ImGui::Text("Camera direction:");
-    ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
     ImGui::End();
 
     if (m_terrainIndex == 0)
@@ -344,13 +436,18 @@ void Application::InitCamera()
 void Application::InitTerrain()
 {
     float worldScale = 4.0f;
-    float textureScale = 4.0f;
+    float textureScale = 200.0f;
 
     std::vector<std::string> TextureFilenames;
+    /*TextureFilenames.push_back("Textures/grass_path_2_diff_1k.jpg");
     TextureFilenames.push_back("Textures/IMGP5525_seamless.jpg");
-    TextureFilenames.push_back("Textures/IMGP5487_seamless.jpg");
     TextureFilenames.push_back("Textures/tilable-IMG_0044-verydark.png");
-    TextureFilenames.push_back("Textures/water.png");
+    TextureFilenames.push_back("Textures/water.png");*/
+
+    TextureFilenames.push_back("Textures/R.png");
+    TextureFilenames.push_back("Textures/G.png");
+    TextureFilenames.push_back("Textures/B.png");
+    TextureFilenames.push_back("Textures/A.png");
 
     //m_terrain.LoadFromFile("data/heightmap.save");
 

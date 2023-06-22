@@ -24,6 +24,6 @@ void main()
 
     vertexColor = vec4(c, c, c, 1.0);
 
-    fragmentUV = uv * 8.0;
+    fragmentUV = uv * 10.0;
     worldPos = pos;
 }

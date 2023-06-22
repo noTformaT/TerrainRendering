@@ -25,6 +25,12 @@ public:
 	void KeyboardCB(uint32_t key, int32_t state);
 	void MouseCB(int button, int action, int x, int y);
 
+	float h0 = 0.112f;
+	float h1 = 0.183f;
+	float h2 = 0.418f;
+	float h3 = 0.536f;
+	float h4 = 0.841f;
+	float h5 = 0.902f;
 private:
 	void CreateWindow();
 	void InitCallbacks();
