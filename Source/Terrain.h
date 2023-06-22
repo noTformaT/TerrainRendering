@@ -6,7 +6,7 @@
 #include "TestRenderSystem.h"
 #include "Texture.h"
 
-#define TEXTURE_COUNT 4
+#define TEXTURE_COUNT 5
 
 class Camera;
 
@@ -28,6 +28,8 @@ public:
 	float GetTerrainSize() const;
 
 	void Destroy();
+
+	void UpdateLayers(float l0, float l1, float l2, float l3, float l4, float l5);
 protected:
 	void LoadHeighMapFile(const char* pFileName);
 
@@ -41,4 +43,11 @@ protected:
 	float m_maxHeight = 0.0f;
 	float m_textureScale = 1.0f;
 	Texture* m_pTextures[TEXTURE_COUNT] = { nullptr };
+
+	float h0 = 0.112f;
+	float h1 = 0.183f;
+	float h2 = 0.418f;
+	float h3 = 0.536f;
+	float h4 = 0.841f;
+	float h5 = 0.902f;
 };

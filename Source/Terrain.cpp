@@ -42,6 +42,7 @@ void BaseTerrain::Render(Camera& camera)
 
 	m_terrainRender.Enable();
 	m_terrainRender.SetVP(vp);
+	m_terrainRender.SetLevels(h0, h1, h2, h3, h4, h5);
 
 	for (size_t i = 0; i < TEXTURE_COUNT; i++)
 	{
@@ -80,6 +81,16 @@ void BaseTerrain::Destroy()
 {
 	m_heightMap.Destroy();
 	m_triangleList.Destroy();
+}
+
+void BaseTerrain::UpdateLayers(float l0, float l1, float l2, float l3, float l4, float l5)
+{
+	h0 = l0;
+	h1 = l1;
+	h2 = l2;
+	h3 = l3;
+	h4 = l4;
+	h5 = l5;
 }
 
 void BaseTerrain::LoadHeighMapFile(const char* pFileName)

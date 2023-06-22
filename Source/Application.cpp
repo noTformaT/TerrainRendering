@@ -82,6 +82,9 @@ void Application::RenderScene(float dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    m_terrain0.UpdateLayers(h0, h1, h2, h3, h4, h5);
+    m_terrain1.UpdateLayers(h0, h1, h2, h3, h4, h5);
+
     switch (m_terrainIndex)
     {
     case 0:
@@ -448,6 +451,7 @@ void Application::InitTerrain()
     TextureFilenames.push_back("Textures/G.png");
     TextureFilenames.push_back("Textures/B.png");
     TextureFilenames.push_back("Textures/A.png");
+    TextureFilenames.push_back("Textures/checker.png");
 
     //m_terrain.LoadFromFile("data/heightmap.save");
 
