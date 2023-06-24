@@ -117,8 +117,9 @@ void TriangleList::InitIndices(std::vector<unsigned int>& indices)
 {
 	int Index = 0;
 
-	for (int z = 0; z < m_depth - 1; z++) {
-		for (int x = 0; x < m_width - 1; x++) {
+	for (int x = 0; x < m_width - 1; x++) {
+		for (int z = 0; z < m_depth - 1; z++) {
+		
 			unsigned int IndexBottomLeft = z * m_width + x;
 			unsigned int IndexTopLeft = (z + 1) * m_width + x;
 			unsigned int IndexTopRight = (z + 1) * m_width + x + 1;
@@ -149,8 +150,9 @@ void TriangleList::InitVertices(const BaseTerrain* pTerrain, std::vector<Vertex>
 {
 	int Index = 0;
 
-	for (int z = 0; z < m_depth; z++) {
-		for (int x = 0; x < m_width; x++) {
+	for (int x = 0; x < m_width; x++) {
+		for (int z = 0; z < m_depth; z++) {
+		
 			assert(Index < vertices.size());
 			vertices[Index].InitVertex(pTerrain, x, z);
 			Index++;
@@ -164,7 +166,7 @@ void TriangleList::Vertex::InitVertex(const BaseTerrain* pTerrain, int x, int z)
 {
 	float worldScale = pTerrain->GetWorldScale();
 	float y = pTerrain->GetHeight(x, z);
-	pos = glm::vec3(x * worldScale, y, -z * worldScale);
+	pos = glm::vec3(x * worldScale, y, z * worldScale);
 	
 	float size = pTerrain->GetTerrainSize();
 
