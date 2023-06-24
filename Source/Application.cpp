@@ -344,6 +344,17 @@ void Application::MouseCB(int button, int action, int x, int y)
 {
 }
 
+void Application::WindowsResize(int width, int height)
+{
+    //int bufferWidth, bufferHeight;
+    glfwGetFramebufferSize(window, &bufferWidth, &bufferHeight);
+
+    // Setup viewport size
+    glViewport(0, 0, bufferWidth, bufferHeight);
+
+    InitCamera();
+}
+
 void Application::CreateWindow()
 {
     int major_ver = 0;
@@ -385,7 +396,7 @@ void Application::CreateWindow()
     // Allow forward compatibility
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
     window = glfwCreateWindow(WIDTH, HEIGHT, "TerrainRendering", monitor, NULL);
 
@@ -427,6 +438,8 @@ void Application::InitCallbacks()
     {
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
+
+    glfwSetWindowSizeCallback(window, WindowsResizeCallback);
 }
 
 void Application::InitCamera()
@@ -495,6 +508,12 @@ void Application::MouseButtonCallback(GLFWwindow* window, int Button, int Action
     glfwGetCursorPos(window, &x, &y);
 
     app->MouseCB(Button, Action, (int)x, (int)y);
+}
+
+void Application::WindowsResizeCallback(GLFWwindow* window, int width, int heigh)
+{
+    Application* app = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    app->WindowsResize(width, heigh);
 }
 
 void Application::UpdateMouse()

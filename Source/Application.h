@@ -24,6 +24,7 @@ public:
 	void PassiveMouseCB(int32_t x, int32_t y);
 	void KeyboardCB(uint32_t key, int32_t state);
 	void MouseCB(int button, int action, int x, int y);
+	void WindowsResize(int width, int height);
 
 	float h0 = 0.112f;
 	float h1 = 0.183f;
@@ -40,6 +41,7 @@ private:
 	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void CursorPosCallback(GLFWwindow* window, double x, double y);
 	static void MouseButtonCallback(GLFWwindow* window, int Button, int Action, int Mode);
+	static void WindowsResizeCallback(GLFWwindow* window, int width, int heigh);
 
 	void UpdateMouse();
 	GLfloat GetMouseXChange();

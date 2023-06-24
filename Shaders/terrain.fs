@@ -17,12 +17,15 @@ uniform float gHeight3 = 0.0;
 uniform float gHeight4 = 0.0;
 uniform float gHeight5 = 0.0;
 
+uniform float minHeight;
+uniform float maxHeight;
+
 layout(location = 0) out vec4 FragColor;
 
 vec4 calcLayers()
 {
     vec4 outColor = vec4(0.0, 0.0, 0.0, 1.0);
-    float height = worldPos.y / 300;
+    float height = worldPos.y / maxHeight;
     float delta = 0.0f;
     float factor = 0.0f;
     vec4 color1 = vec4(0.0, 0.0, 0.0, 1.0);
