@@ -1,10 +1,12 @@
 #version 330
 layout (location = 0) in vec3 pos;
 layout (location = 1) in vec2 uv;
+layout (location = 2) in vec3 normal;
 
 out vec4 vertexColor;
 out vec2 fragmentUV;
 out vec3 worldPos;
+out vec3 fragmentNormal;
 
 uniform mat4 model;
 uniform float minHeight;
@@ -26,4 +28,6 @@ void main()
 
     fragmentUV = uv * 10.0;
     worldPos = pos;
+    fragmentNormal = normal;
+
 }

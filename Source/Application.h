@@ -8,6 +8,7 @@
 //#include "Terrain.h"
 #include "FaultFormationTerrain.h"
 #include "MidpointDisplacementTerrain.h"
+#include "LightingData.h"
 
 #include "Camera.h"
 
@@ -58,6 +59,8 @@ private:
 
 	GLfloat deltaTime = .0f;
 	GLfloat lastTime = .0f;
+
+	LightingData lightingData;
 
 	// KeyBoard
 private:

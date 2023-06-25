@@ -1,5 +1,6 @@
 #include "TerrainRenderSystem.h"
 #include "Util.h"
+#include "LightingData.h"
 #include <glm/gtc/type_ptr.hpp>
 
 TerrainRenderSystem::TerrainRenderSystem()
@@ -67,6 +68,12 @@ bool TerrainRenderSystem::Init()
 	m_level4 = GetUniformLocation("gHeight4");
 	m_level5 = GetUniformLocation("gHeight5");
 
+	m_sunDirectionLoc = GetUniformLocation("sunDirection");
+	m_sunColorLoc = GetUniformLocation("sunColor");
+	m_sunIntencityLoc = GetUniformLocation("sunIntencity");
+	m_useLit = GetUniformLocation("useLit");
+	m_sunDiffuse = GetUniformLocation("sunDiffuse");
+
 	Enable();
 
 	glUniform1i(m_myTexture1Loc, 0);
@@ -97,4 +104,19 @@ void TerrainRenderSystem::SetLevels(float l0, float l1, float l2, float l3, floa
 	glUniform1f(m_level3, l3);
 	glUniform1f(m_level4, l4);
 	glUniform1f(m_level5, l5);
+}
+
+void TerrainRenderSystem::SetLightingData(LightingData& lightingData)
+{
+	glm::vec3 sunDir = glm::normalize(lightingData.SunDirection * -1.0f);
+	glUniform3f(m_sunDirectionLoc, sunDir.x, sunDir.y, sunDir.z);
+
+	glm::vec3 sunColor = lightingData.SunColor;
+	glUniform3f(m_sunColorLoc, sunColor.x, sunColor.y, sunColor.z);
+
+	glUniform1f(m_sunIntencityLoc, lightingData.SunIntencity);
+
+	glUniform1f(m_sunDiffuse, lightingData.SunDiffuse);
+
+	glUniform1i(m_useLit, lightingData.LitMaterial);
 }

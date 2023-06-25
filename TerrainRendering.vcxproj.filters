@@ -86,6 +86,9 @@
     <ClCompile Include="Source\MidpointDisplacementTerrain.cpp">
       <Filter>Source\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LightingData.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -129,6 +132,9 @@
     </ClInclude>
     <ClInclude Include="Source\MidpointDisplacementTerrain.h">
       <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LightingData.h">
+      <Filter>Source\Private</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 in vec4 vertexColor;
 in vec2 fragmentUV;
 in vec3 worldPos;
+in vec3 fragmentNormal;
 
 uniform sampler2D myTexture1;
 uniform sampler2D myTexture2;
@@ -19,6 +20,12 @@ uniform float gHeight5 = 0.0;
 
 uniform float minHeight;
 uniform float maxHeight;
+
+uniform vec3 sunDirection;
+uniform vec3 sunColor;
+uniform float sunIntencity;
+uniform bool useLit;
+uniform float sunDiffuse;
 
 layout(location = 0) out vec4 FragColor;
 
@@ -130,26 +137,18 @@ void main()
     //FragColor = vec4(fragmentUV.x / 5.0f, fragmentUV.y / 5.0f, 1.0f, 1.0f);
     //FragColor = vec4(fragmentUV.x / 5.0f, fragmentUV.y / 5.0f, vertexColor.x, 1.0f);
     FragColor = calcLayers();
-    /*if(fragmentUV.y > 0.5f)
+
+    if (useLit)
     {
-        if(fragmentUV.x > 0.5f)
-        {
-            FragColor = texture(myTexture1, fragmentUV * 5.0f);
-        }
-        else
-        {
-            FragColor = texture(myTexture2, fragmentUV * 5.0f);
-        }
+
+        vec3 normal = normalize(fragmentNormal);
+        vec3 diffuse = vec3(dot(normal, sunDirection));
+    
+        diffuse *= sunIntencity;
+        diffuse *= sunColor;
+
+        diffuse += sunDiffuse;
+
+        FragColor *= vec4(diffuse, 1.0f);
     }
-    else
-        {
-        if(fragmentUV.x > 0.5f)
-        {
-            FragColor = texture(myTexture3, fragmentUV * 5.0f);
-        }
-        else
-        {
-            FragColor = texture(myTexture4, fragmentUV * 5.0f);
-        }
-    }*/
 }

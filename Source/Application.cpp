@@ -88,10 +88,10 @@ void Application::RenderScene(float dt)
     switch (m_terrainIndex)
     {
     case 0:
-        m_terrain0.Render(m_pGameCamera);
+        m_terrain0.Render(m_pGameCamera, lightingData);
         break;
     case 1:
-        m_terrain1.Render(m_pGameCamera);
+        m_terrain1.Render(m_pGameCamera, lightingData);
         break;
     default:
         break;
@@ -243,6 +243,22 @@ void Application::RenderUI(float dt)
         h4 = hs4;
         h5 = hs5;
         
+    }
+
+    if (ImGui::CollapsingHeader("Lighting Settings"))
+    {
+        float direction[3] = { lightingData.SunDirection.x, lightingData.SunDirection.y, lightingData.SunDirection.z };
+        ImGui::SliderFloat3("Sun Direction", direction, -1.0f, 1.0f);
+        lightingData.SunDirection = glm::vec3(direction[0], direction[1], direction[2]);
+
+        float colors[3] = { lightingData.SunColor.r, lightingData.SunColor.g, lightingData.SunColor.b };
+        ImGui::ColorPicker3("Sun Color", colors);
+        lightingData.SunColor = glm::vec3(colors[0], colors[1], colors[2]);
+
+        ImGui::SliderFloat("Sun Intencity", &lightingData.SunIntencity, 0.0f, 2.0f);
+        ImGui::SliderFloat("Sun Diffuse", &lightingData.SunDiffuse, 0.0f, 1.0f);
+
+        ImGui::Checkbox("Lit material", &lightingData.LitMaterial);
     }
 
     ImGui::End();
@@ -455,15 +471,15 @@ void Application::InitTerrain()
     float textureScale = 200.0f;
 
     std::vector<std::string> TextureFilenames;
-    /*TextureFilenames.push_back("Textures/grass_path_2_diff_1k.jpg");
+    TextureFilenames.push_back("Textures/grass_path_2_diff_1k.jpg");
     TextureFilenames.push_back("Textures/IMGP5525_seamless.jpg");
     TextureFilenames.push_back("Textures/tilable-IMG_0044-verydark.png");
-    TextureFilenames.push_back("Textures/water.png");*/
+    TextureFilenames.push_back("Textures/water.png");
 
-    TextureFilenames.push_back("Textures/R.png");
+    /*TextureFilenames.push_back("Textures/R.png");
     TextureFilenames.push_back("Textures/G.png");
     TextureFilenames.push_back("Textures/B.png");
-    TextureFilenames.push_back("Textures/A.png");
+    TextureFilenames.push_back("Textures/A.png");*/
     TextureFilenames.push_back("Textures/checker.png");
 
     //m_terrain.LoadFromFile("data/heightmap.save");

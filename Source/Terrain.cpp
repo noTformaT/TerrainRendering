@@ -36,13 +36,14 @@ void BaseTerrain::InitTerrain(float worldScale, float textureScale, std::vector<
 	m_terrainRender.Init();
 }
 
-void BaseTerrain::Render(Camera& camera)
+void BaseTerrain::Render(Camera& camera, LightingData& lightingData)
 {
 	glm::mat4 vp = camera.CalculateVewMatrix();
 
 	m_terrainRender.Enable();
 	m_terrainRender.SetVP(vp);
 	m_terrainRender.SetLevels(h0, h1, h2, h3, h4, h5);
+	m_terrainRender.SetLightingData(lightingData);
 
 	for (size_t i = 0; i < TEXTURE_COUNT; i++)
 	{

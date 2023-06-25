@@ -30,6 +30,7 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\FaultFormationTerrain.cpp" />
     <ClCompile Include="Source\Image.cpp" />
+    <ClCompile Include="Source\LightingData.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MidpointDisplacementTerrain.cpp" />
     <ClCompile Include="Source\RenderSystem.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\FaultFormationTerrain.h" />
     <ClInclude Include="Source\Image.h" />
+    <ClInclude Include="Source\LightingData.h" />
     <ClInclude Include="Source\MidpointDisplacementTerrain.h" />
     <ClInclude Include="Source\RenderSystem.h" />
     <ClInclude Include="Source\Terrain.h" />

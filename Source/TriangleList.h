@@ -25,6 +25,7 @@ private:
 	{
 		glm::vec3 pos;
 		glm::vec2 uv;
+		glm::vec3 normal = glm::vec3(0.0f, 1.0f, 0.0f);
 		
 		void InitVertex(const BaseTerrain* pTerrain, int x, int z);
 	};
@@ -34,6 +35,7 @@ private:
 	void PopulateBuffers(const BaseTerrain* pTerrain);
 	void InitIndices(std::vector<unsigned int>& indices);
 	void InitVertices(const BaseTerrain* pTerrain, std::vector<Vertex>& vertices);
+	void CalcNormals(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices);
 
 private:
 	int m_width = 0;

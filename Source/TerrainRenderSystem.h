@@ -3,6 +3,8 @@
 #include "RenderSystem.h"
 #include <glm/glm.hpp>
 
+struct LightingData;
+
 class TerrainRenderSystem : public RenderSystem
 {
 public:
@@ -12,6 +14,7 @@ public:
 	void SetVP(const glm::mat4& vp);
 	void SetMinMaxHeight(float min, float max);
 	void SetLevels(float l0, float l1, float l2, float l3, float l4, float l5);
+	void SetLightingData(LightingData& lightingData);
 
 private:
 	GLuint m_VPLoc = 0;
@@ -30,4 +33,10 @@ private:
 	GLuint m_level3 = 0;
 	GLuint m_level4 = 0;
 	GLuint m_level5 = 0;
+
+	GLuint m_sunDirectionLoc = 0;
+	GLuint m_sunColorLoc = 0;
+	GLuint m_sunIntencityLoc = 0;
+	GLuint m_sunDiffuse = 0;
+	GLuint m_useLit = 0;
 };

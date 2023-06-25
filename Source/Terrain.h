@@ -5,6 +5,7 @@
 #include "TriangleList.h"
 #include "TestRenderSystem.h"
 #include "Texture.h"
+#include "LightingData.h"
 
 #define TEXTURE_COUNT 5
 
@@ -19,7 +20,7 @@ public:
 	//void CreateTriangle();
 
 	void InitTerrain(float worldScale, float textureScale, std::vector<std::string>& textureFileNames);
-	void Render(Camera& camera);
+	void Render(Camera& camera, LightingData& lightingData);
 
 	void LoadFromFile(const char* pFileName);
 
@@ -30,6 +31,7 @@ public:
 	void Destroy();
 
 	void UpdateLayers(float l0, float l1, float l2, float l3, float l4, float l5);
+
 protected:
 	void LoadHeighMapFile(const char* pFileName);
 

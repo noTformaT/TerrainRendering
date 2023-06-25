@@ -72,6 +72,7 @@ void TriangleList::CreateGLState()
 
 	int POS_LOC = 0;
 	int UV_LOC = 1;
+	int NORMAL_LOC = 2;
 
 	size_t NumFloats = 0;
 
@@ -82,6 +83,10 @@ void TriangleList::CreateGLState()
 	glEnableVertexAttribArray(UV_LOC);
 	glVertexAttribPointer(UV_LOC, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)(NumFloats * sizeof(float)));
 	NumFloats += 2;
+
+	glEnableVertexAttribArray(NORMAL_LOC);
+	glVertexAttribPointer(NORMAL_LOC, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)(NumFloats * sizeof(float)));
+	NumFloats += 3;
 
 	/*glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
@@ -108,6 +113,8 @@ void TriangleList::PopulateBuffers(const BaseTerrain* pTerrain)
 	int numQuads = (m_width - 1) * (m_depth - 1);
 	indices.resize(numQuads * 6);
 	InitIndices(indices);
+
+	CalcNormals(vertices, indices);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices[0]) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices[0]) * indices.size(), &indices[0], GL_STATIC_DRAW);
@@ -160,6 +167,34 @@ void TriangleList::InitVertices(const BaseTerrain* pTerrain, std::vector<Vertex>
 	}
 
 	assert(Index == vertices.size());
+}
+
+void TriangleList::CalcNormals(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices)
+{
+	//unsigned int index = 0;
+
+	//return;
+
+	for (unsigned int i = 0;  i < indices.size(); i += 3)
+	{
+		unsigned int index0 = indices[i];
+		unsigned int index1 = indices[i + 1];
+		unsigned int index2 = indices[i + 2];
+
+		glm::vec3 v1 = vertices[index1].pos - vertices[index0].pos;
+		glm::vec3 v2 = vertices[index2].pos - vertices[index0].pos;
+
+		glm::vec3 normal = glm::normalize(glm::cross(v2, v1));
+
+		vertices[index0].normal += normal;
+		vertices[index1].normal += normal;
+		vertices[index2].normal += normal;
+	}
+
+	for (size_t i = 0; i < vertices.size(); i++)
+	{
+		vertices[i].normal = glm::normalize(vertices[i].normal);
+	}
 }
 
 void TriangleList::Vertex::InitVertex(const BaseTerrain* pTerrain, int x, int z)
