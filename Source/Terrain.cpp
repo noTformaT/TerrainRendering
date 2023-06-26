@@ -33,15 +33,52 @@ void BaseTerrain::InitTerrain(float worldScale, float textureScale, std::vector<
 		m_pTextures[i]->Load(textureFileNames[i]);
 	}
 
+	m_shadowMapRender.Init();
 	m_terrainRender.Init();
+	m_shadowMapViewRender.Init();
 }
 
-void BaseTerrain::Render(Camera& camera, LightingData& lightingData)
+void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width, GLint height)
 {
+	glFrontFace(GL_CW);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+	m_shadowMapRender.Enable();
+
+	glViewport(0, 0, lightingData.shadowMap.GetShadowHeight(), lightingData.shadowMap.GetShadowHeight());
+	lightingData.shadowMap.Write();
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	glm::vec3 center = camera.GetPosition();
+
+	glm::mat4 lightTransform = lightingData.CalculateLightTransform(center);
+	glm::mat4 model(1.0f);
+	//model = glm::translate(model, camera.GetPosition());
+	m_shadowMapRender.SetModelTransform(&model);
+	m_shadowMapRender.SetDirectionalLightTransform(&lightTransform);
+
+	m_triangleList.Render();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glViewport(0, 0, width, height);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	glm::mat4 vp = camera.CalculateVewMatrix();
 
 	m_terrainRender.Enable();
-	m_terrainRender.SetVP(vp);
+
+	glm::mat4 projection = camera.GetProjection();
+	glm::mat4 view = camera.GetView();
+
+	m_terrainRender.SetModelViewProjection(model, view, projection);
+	m_terrainRender.SetLightSpaceMatrix(lightTransform);
+	lightingData.shadowMap.Read(GL_TEXTURE0);
+
+	/*m_terrainRender.SetVP(vp);
 	m_terrainRender.SetLevels(h0, h1, h2, h3, h4, h5);
 	m_terrainRender.SetLightingData(lightingData);
 
@@ -51,9 +88,35 @@ void BaseTerrain::Render(Camera& camera, LightingData& lightingData)
 		{
 			m_pTextures[i]->Bind(GL_TEXTURE0 + i);
 		}
-	}
+	}*/
 
 	m_triangleList.Render();
+
+	//
+
+	//glFrontFace(GL_CCW);
+	//glDisable(GL_CULL_FACE);
+	//glCullFace(GL_FRONT_AND_BACK);
+
+	glViewport(width - 256, height - 256, 256, 256);
+	glEnable(GL_SCISSOR_TEST);
+	glScissor(width - 256, height - 256, 256, 256);
+
+	glClearColor(0.1f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glDisable(GL_SCISSOR_TEST);
+
+	m_shadowMapViewRender.Enable();
+
+	//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+	glBindVertexArray(m_triangleList.m_vao1);
+
+
+	lightingData.shadowMap.Read(GL_TEXTURE0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindVertexArray(0);
 }
 
 void BaseTerrain::LoadFromFile(const char* pFileName)

@@ -128,7 +128,7 @@ bool RenderSystem::Finalize()
 
 GLuint RenderSystem::GetUniformLocation(const char* pUniformName)
 {
-	GLuint location = glGetUniformLocation(m_shaderProg, pUniformName);
+	GLint location = glGetUniformLocation(m_shaderProg, pUniformName);
 
 	if (location == INVALID_UNIFORM_LOCATION)
 	{

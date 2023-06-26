@@ -89,6 +89,15 @@
     <ClCompile Include="Source\LightingData.cpp">
       <Filter>Source\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\DirectionalShadowMapRenderSystem.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShadowMap.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShadowMapViewRenderSystem.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -133,8 +142,17 @@
     <ClInclude Include="Source\MidpointDisplacementTerrain.h">
       <Filter>Source\Public</Filter>
     </ClInclude>
+    <ClInclude Include="Source\DirectionalShadowMapRenderSystem.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
     <ClInclude Include="Source\LightingData.h">
-      <Filter>Source\Private</Filter>
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShadowMap.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShadowMapViewRenderSystem.h">
+      <Filter>Source\Public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +166,24 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\test.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadow_map.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadow_map.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadow_calc.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadow_calc.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadow_view.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadow_view.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

@@ -13,7 +13,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // windows dimentions
-const GLint WIDTH = 1027, HEIGHT = 768;
+const GLint WIDTH = 1024, HEIGHT = 768;
 
 Application::Application()
 {
@@ -36,10 +36,7 @@ void Application::Init()
 	InitTerrain();
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glFrontFace(GL_CW);
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
+    
 }
 
 void Application::Run()
@@ -88,10 +85,10 @@ void Application::RenderScene(float dt)
     switch (m_terrainIndex)
     {
     case 0:
-        m_terrain0.Render(m_pGameCamera, lightingData);
+        m_terrain0.Render(m_pGameCamera, lightingData, bufferWidth, bufferHeight);
         break;
     case 1:
-        m_terrain1.Render(m_pGameCamera, lightingData);
+        m_terrain1.Render(m_pGameCamera, lightingData, bufferWidth, bufferHeight);
         break;
     default:
         break;
@@ -109,6 +106,19 @@ void Application::RenderUI(float dt)
     ImGui::NewFrame();
 
     glm::vec3 pos = m_pGameCamera.GetPosition();
+
+    ImGui::Begin("Debug ShadowMap");
+
+    ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+    ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+
+    vMin.x += ImGui::GetWindowPos().x;
+    vMin.y += ImGui::GetWindowPos().y;
+    vMax.x += ImGui::GetWindowPos().x;
+    vMax.y += ImGui::GetWindowPos().y;
+
+    ImGui::GetForegroundDrawList()->AddRect(vMin, vMax, IM_COL32(255, 255, 0, 255));
+    ImGui::End();
 
     ImGui::Begin("Options");
 
@@ -460,14 +470,18 @@ void Application::InitCallbacks()
 
 void Application::InitCamera()
 {
-    m_pGameCamera = Camera(glm::vec3(18.0f, 228, -170.0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
+    //m_pGameCamera = Camera(glm::vec3(18.0f, 228, -170.0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
+    m_pGameCamera = Camera(glm::vec3(0, 0, 0), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
 
     m_pGameCamera.SetProjection(glm::perspective(glm::radians(45.0f), (float)bufferWidth / (float)bufferHeight, 0.1f, 2000.0f));
+    //m_pGameCamera.SetProjection(glm::ortho(-20.0f, 20.0f, -(HEIGHT / 2.0f), HEIGHT / 2.0f, 0.0f, 2000.0f));
 }
 
 void Application::InitTerrain()
 {
-    float worldScale = 4.0f;
+    lightingData.Init();
+
+    float worldScale = 1.0f;
     float textureScale = 200.0f;
 
     std::vector<std::string> TextureFilenames;

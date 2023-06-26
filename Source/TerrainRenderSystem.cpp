@@ -14,12 +14,12 @@ bool TerrainRenderSystem::Init()
 		return false;
 	}
 
-	if (!AddShader(GL_VERTEX_SHADER, "Shaders/terrain.vs"))
+	if (!AddShader(GL_VERTEX_SHADER, "Shaders/shadow_calc.vs"))
 	{
 		return false;
 	}
 
-	if (!AddShader(GL_FRAGMENT_SHADER, "Shaders/terrain.fs"))
+	if (!AddShader(GL_FRAGMENT_SHADER, "Shaders/shadow_calc.fs"))
 	{
 		return false;
 	}
@@ -29,7 +29,7 @@ bool TerrainRenderSystem::Init()
 		return false;
 	}
 
-	m_VPLoc = GetUniformLocation("model");
+	/*m_VPLoc = GetUniformLocation("model");
 
 	if (m_VPLoc == INVALID_UNIFORM_LOCATION)
 	{
@@ -72,15 +72,25 @@ bool TerrainRenderSystem::Init()
 	m_sunColorLoc = GetUniformLocation("sunColor");
 	m_sunIntencityLoc = GetUniformLocation("sunIntencity");
 	m_useLit = GetUniformLocation("useLit");
-	m_sunDiffuse = GetUniformLocation("sunDiffuse");
+	m_sunDiffuse = GetUniformLocation("sunDiffuse");*/
 
 	Enable();
 
-	glUniform1i(m_myTexture1Loc, 0);
+	m_projectionLoc = GetUniformLocation("projection");
+	m_viewLoc = GetUniformLocation("view");
+	m_lightSpaceMatrixLoc = GetUniformLocation("lightSpaceMatrix");
+	m_modelLoc = GetUniformLocation("model");
+	m_shadowMapLoc = GetUniformLocation("shadowMap");
+	
+	glUniform1i(m_shadowMapLoc, 0);
+
+	
+
+	/*glUniform1i(m_myTexture1Loc, 0);
 	glUniform1i(m_myTexture2Loc, 1);
 	glUniform1i(m_myTexture3Loc, 2);
 	glUniform1i(m_myTexture4Loc, 3);
-	glUniform1i(m_myTexture5Loc, 4);
+	glUniform1i(m_myTexture5Loc, 4);*/
 
 	return true;
 }
@@ -88,6 +98,18 @@ bool TerrainRenderSystem::Init()
 void TerrainRenderSystem::SetVP(const glm::mat4& vp)
 {
 	glUniformMatrix4fv(m_VPLoc, 1, GL_FALSE, glm::value_ptr(vp));
+}
+
+void TerrainRenderSystem::SetModelViewProjection(const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection)
+{
+	glUniformMatrix4fv(m_modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(m_projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(m_viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+}
+
+void TerrainRenderSystem::SetLightSpaceMatrix(const glm::mat4& matrix)
+{
+	glUniformMatrix4fv(m_lightSpaceMatrixLoc, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 void TerrainRenderSystem::SetMinMaxHeight(float min, float max)

@@ -12,11 +12,19 @@ public:
 	
 	virtual bool Init() override;
 	void SetVP(const glm::mat4& vp);
+	void SetModelViewProjection(const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection);
+	void SetLightSpaceMatrix(const glm::mat4& matrix);
 	void SetMinMaxHeight(float min, float max);
 	void SetLevels(float l0, float l1, float l2, float l3, float l4, float l5);
 	void SetLightingData(LightingData& lightingData);
 
 private:
+	GLuint m_modelLoc = 0;
+	GLuint m_viewLoc = 0;
+	GLuint m_projectionLoc = 0;
+	GLuint m_lightSpaceMatrixLoc = 0;
+	GLuint m_shadowMapLoc = 0;
+
 	GLuint m_VPLoc = 0;
 	GLuint m_minHeightLoc = 0;
 	GLuint m_maxHeightLoc = 0;

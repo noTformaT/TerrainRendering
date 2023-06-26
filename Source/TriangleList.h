@@ -37,10 +37,15 @@ private:
 	void InitVertices(const BaseTerrain* pTerrain, std::vector<Vertex>& vertices);
 	void CalcNormals(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices);
 
+public:
+	GLuint m_vao1 = 0;
+
 private:
 	int m_width = 0;
 	int m_depth = 0;
 	GLuint m_vao = 0;
 	GLuint m_vb = 0;
 	GLuint m_ib = 0;
+
+	
 };

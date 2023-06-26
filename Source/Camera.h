@@ -15,6 +15,9 @@ public:
 	void MouseControl(GLfloat xChange, GLfloat yChange, GLfloat deltaTime);
 	glm::mat4 CalculateVewMatrix();
 
+	glm::mat4 GetProjection();
+	glm::mat4 GetView();
+
 	void SetProjection(glm::mat4 proj);
 
 	glm::vec3 GetPosition() const;

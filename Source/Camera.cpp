@@ -93,6 +93,24 @@ glm::mat4 Camera::CalculateVewMatrix()
 	return projection * view;
 }
 
+glm::mat4 Camera::GetProjection()
+{
+	return projection;
+}
+
+glm::mat4 Camera::GetView()
+{
+	glm::vec3 look = position + front;
+
+	//printf("pos x:%f y:%f z:%f, look x:%f y:%f z:%f \n", position.x, position.y, position.z, look.x, look.y, look.z);
+
+
+
+	glm::mat4 view = glm::lookAt(position, look, up);
+
+	return view;
+}
+
 void Camera::SetProjection(glm::mat4 proj)
 {
 	projection = proj;

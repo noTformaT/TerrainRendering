@@ -6,6 +6,8 @@
 #include "TestRenderSystem.h"
 #include "Texture.h"
 #include "LightingData.h"
+#include "DirectionalShadowMapRenderSystem.h"
+#include "ShadowMapViewRenderSystem.h"
 
 #define TEXTURE_COUNT 5
 
@@ -20,7 +22,7 @@ public:
 	//void CreateTriangle();
 
 	void InitTerrain(float worldScale, float textureScale, std::vector<std::string>& textureFileNames);
-	void Render(Camera& camera, LightingData& lightingData);
+	void Render(Camera& camera, LightingData& lightingData, GLint width, GLint height);
 
 	void LoadFromFile(const char* pFileName);
 
@@ -38,8 +40,10 @@ protected:
 	int m_terrainSize = 0;
 	Array2D<float> m_heightMap;
 	TriangleList m_triangleList;
+	DirectionalShadowMapRenderSystem m_shadowMapRender;
 	TerrainRenderSystem m_terrainRender;
 	TestRenderSystem m_testRender;
+	ShadowMapViewRenderSystem m_shadowMapViewRender;
 	float m_worldScale = 1.0f;
 	float m_minHeight = 0.0f;
 	float m_maxHeight = 0.0f;
