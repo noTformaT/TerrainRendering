@@ -24,6 +24,8 @@ public:
 	void InitTerrain(float worldScale, float textureScale, std::vector<std::string>& textureFileNames);
 	void Render(Camera& camera, LightingData& lightingData, GLint width, GLint height);
 
+	void RenderShadowMapPreview(GLint x, GLint y, GLint width, GLint height, LightingData& lightingData);
+
 	void LoadFromFile(const char* pFileName);
 
 	float GetHeight(int x, int z) const;

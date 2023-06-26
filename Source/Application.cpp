@@ -107,17 +107,35 @@ void Application::RenderUI(float dt)
 
     glm::vec3 pos = m_pGameCamera.GetPosition();
 
-    ImGui::Begin("Debug ShadowMap");
+    bool renderShadowMapView = false;
+    GLint width = 0;
+    GLint height = 0;
+    GLint x = 0;
+    GLint y = 0;
 
-    ImVec2 vMin = ImGui::GetWindowContentRegionMin();
-    ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+    if (ImGui::Begin("Debug ShadowMap"))
+    {
+        ImGui::SetWindowSize(ImVec2(256, 256));
 
-    vMin.x += ImGui::GetWindowPos().x;
-    vMin.y += ImGui::GetWindowPos().y;
-    vMax.x += ImGui::GetWindowPos().x;
-    vMax.y += ImGui::GetWindowPos().y;
+        renderShadowMapView = true;
 
-    ImGui::GetForegroundDrawList()->AddRect(vMin, vMax, IM_COL32(255, 255, 0, 255));
+        ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+        ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+
+        width = GLint(vMax.x - vMin.x);
+        height = GLint(vMax.y - vMin.y);
+
+        vMin.x += ImGui::GetWindowPos().x;
+        vMin.y += ImGui::GetWindowPos().y;
+        vMax.x += ImGui::GetWindowPos().x;
+        vMax.y += ImGui::GetWindowPos().y;
+
+        ImGui::GetForegroundDrawList()->AddRect(vMin, vMax, IM_COL32(255, 255, 0, 0));
+
+        x = GLint(vMin.x);
+        y = GLint(vMin.y) + height;
+        y = bufferHeight - y;
+    }
     ImGui::End();
 
     ImGui::Begin("Options");
@@ -310,6 +328,11 @@ void Application::RenderUI(float dt)
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    if (renderShadowMapView)
+    {
+        m_terrain0.RenderShadowMapPreview(x, y, width, height, lightingData);
+    }
 }
 
 void Application::PassiveMouseCB(int32_t x, int32_t y)

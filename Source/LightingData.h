@@ -22,14 +22,14 @@ struct LightingData
 		shadowMap.Init(1024, 1024);
 
 		float near_plane = 0.0f, far_plane = 300.5f;
-		lightProj = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+		lightProj = glm::ortho(-128.0f, 128.0f, -128.0f, 128.0f, near_plane, far_plane);
 
 		//lightProj = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f, 2000.0f);
 	}
 
 	glm::mat4 CalculateLightTransform(glm::vec3& center)
 	{
-		glm::mat4 lightView = glm::lookAt(glm::vec3(-43.0, 98.0, -143.0),
+		glm::mat4 lightView = glm::lookAt(center,
 			glm::vec3(0.0f, 0.0f, 0.0f),
 			glm::vec3(0.0f, 1.0f, 0.0f));
 

@@ -94,13 +94,18 @@ void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width
 
 	//
 
+	//RenderShadowMapPreview(width - 256, height - 256, 256, 256, lightingData);
+}
+
+void BaseTerrain::RenderShadowMapPreview(GLint x, GLint y, GLint width, GLint height, LightingData& lightingData)
+{
 	//glFrontFace(GL_CCW);
 	//glDisable(GL_CULL_FACE);
 	//glCullFace(GL_FRONT_AND_BACK);
 
-	glViewport(width - 256, height - 256, 256, 256);
+	glViewport(x, y, width, height);
 	glEnable(GL_SCISSOR_TEST);
-	glScissor(width - 256, height - 256, 256, 256);
+	glScissor(x, y, width, height);
 
 	glClearColor(0.1f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
