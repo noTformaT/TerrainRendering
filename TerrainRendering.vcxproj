@@ -38,6 +38,8 @@
     <ClCompile Include="Source\ShadowBox.cpp" />
     <ClCompile Include="Source\ShadowMap.cpp" />
     <ClCompile Include="Source\ShadowMapViewRenderSystem.cpp" />
+    <ClCompile Include="Source\SkyBox.cpp" />
+    <ClCompile Include="Source\SkyBoxRenderSystem.cpp" />
     <ClCompile Include="Source\Terrain.cpp" />
     <ClCompile Include="Source\TerrainRenderSystem.cpp" />
     <ClCompile Include="Source\TerrainTextureGenerator.cpp" />
@@ -59,6 +61,8 @@
     <ClInclude Include="Source\ShadowBox.h" />
     <ClInclude Include="Source\ShadowMap.h" />
     <ClInclude Include="Source\ShadowMapViewRenderSystem.h" />
+    <ClInclude Include="Source\SkyBox.h" />
+    <ClInclude Include="Source\SkyBoxRenderSystem.h" />
     <ClInclude Include="Source\Terrain.h" />
     <ClInclude Include="Source\TerrainRenderSystem.h" />
     <ClInclude Include="Source\TerrainTextureGenerator.h" />
@@ -74,6 +78,8 @@
     <None Include="Shaders\shadow_map.vs" />
     <None Include="Shaders\shadow_view.fs" />
     <None Include="Shaders\shadow_view.vs" />
+    <None Include="Shaders\skybox.fs" />
+    <None Include="Shaders\skybox.vs" />
     <None Include="Shaders\terrain.fs" />
     <None Include="Shaders\terrain.vs" />
     <None Include="Shaders\test.fs" />

@@ -2,6 +2,7 @@
 
 #include <list>
 #include <GL/glew.h>
+#include <string>
 
 class RenderSystem
 {
@@ -16,13 +17,15 @@ public:
 
 	GLuint GetProgram() const;
 
+	void SetInt(const std::string& name, int value) const;
+
 protected:
 
 	bool AddShader(GLenum ShaderType, const char* pFileName);
 
 	bool Finalize();
 
-	GLuint GetUniformLocation(const char* pUniformName);
+	GLuint GetUniformLocation(const char* pUniformName) const;
 
 	GLuint m_shaderProg = 0;
 

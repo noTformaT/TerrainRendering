@@ -35,8 +35,13 @@ void Application::Init()
 	CreateWindow();
 	InitCallbacks();
 	InitCamera(false);
+    InitSkyBox();
 	InitTerrain();
 
+    glFrontFace(GL_CW);
+    glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     
 }
@@ -80,6 +85,8 @@ void Application::Run()
 void Application::RenderScene(float dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    m_skyBox.Render(m_pGameCamera, bufferWidth, bufferHeight);
 
     m_terrain0.UpdateLayers(h0, h1, h2, h3, h4, h5);
     m_terrain1.UpdateLayers(h0, h1, h2, h3, h4, h5);
@@ -289,6 +296,32 @@ void Application::RenderUI(float dt)
         ImGui::SliderFloat("Sun Diffuse", &lightingData.SunDiffuse, 0.0f, 1.0f);
 
         ImGui::Checkbox("Lit material", &lightingData.LitMaterial);
+    }
+
+    if (ImGui::CollapsingHeader("Sky sphere"))
+    {
+        const char* data[] = { "Cubemap 1", "Cubemap 2", "Cubemap 3", "Cubemap 4", "Cubemap 5", "Cubemap 6", "Cubemap 7", "Cubemap 8", "Cubemap 9", "Cubemap 10", "Cubemap 11" };
+
+        const char* currentItem = data[m_skyBox.GetCubemapIndex()];
+
+        if (ImGui::BeginCombo("Cubemap", currentItem))
+        {
+            for (size_t i = 0; i < 11; i++)
+            {
+                bool selectable = i == m_skyBox.GetCubemapIndex();
+                if (ImGui::Selectable(data[i], selectable))
+                {
+                    m_skyBox.SetCubemapIndex(i);
+                }
+
+                if (selectable)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+
+            ImGui::EndCombo();
+        }
     }
 
     ImGui::End();
@@ -504,6 +537,11 @@ void Application::InitCamera(bool isRecalculate)
 
     m_pGameCamera.SetProjection(glm::perspective(glm::radians(FOV), (float)bufferWidth / (float)bufferHeight, NEAR_PLANE, 2000.0f));
     //m_pGameCamera.SetProjection(glm::ortho(-20.0f, 20.0f, -(HEIGHT / 2.0f), HEIGHT / 2.0f, 0.0f, 2000.0f));
+}
+
+void Application::InitSkyBox()
+{
+    m_skyBox.Init();
 }
 
 void Application::InitTerrain()

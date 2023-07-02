@@ -48,6 +48,11 @@ GLuint RenderSystem::GetProgram() const
 	return m_shaderProg;
 }
 
+void RenderSystem::SetInt(const std::string& name, int value) const
+{
+	glUniform1i(GetUniformLocation(name.c_str()), value);
+}
+
 bool RenderSystem::AddShader(GLenum ShaderType, const char* pFileName)
 {
 	std::string s;
@@ -126,7 +131,7 @@ bool RenderSystem::Finalize()
 	return true;
 }
 
-GLuint RenderSystem::GetUniformLocation(const char* pUniformName)
+GLuint RenderSystem::GetUniformLocation(const char* pUniformName) const
 {
 	GLint location = glGetUniformLocation(m_shaderProg, pUniformName);
 

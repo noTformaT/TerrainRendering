@@ -101,6 +101,12 @@
     <ClCompile Include="Source\ShadowBox.cpp">
       <Filter>Source\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SkyBox.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SkyBoxRenderSystem.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -160,6 +166,12 @@
     <ClInclude Include="Source\ShadowBox.h">
       <Filter>Source\Public</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SkyBox.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SkyBoxRenderSystem.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\terrain.fs">
@@ -190,6 +202,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\shadow_view.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\skybox.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\skybox.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

@@ -9,6 +9,7 @@
 #include "FaultFormationTerrain.h"
 #include "MidpointDisplacementTerrain.h"
 #include "LightingData.h"
+#include "SkyBox.h"
 
 #include "Camera.h"
 
@@ -27,16 +28,17 @@ public:
 	void MouseCB(int button, int action, int x, int y);
 	void WindowsResize(int width, int height);
 
-	float h0 = 0.112f;
-	float h1 = 0.183f;
-	float h2 = 0.418f;
-	float h3 = 0.536f;
-	float h4 = 0.841f;
-	float h5 = 0.902f;
+	float h0 = 0.218f;
+	float h1 = 0.249f;
+	float h2 = 0.284f;
+	float h3 = 0.386f;
+	float h4 = 0.560f;
+	float h5 = 0.684;
 private:
 	void CreateWindow();
 	void InitCallbacks();
 	void InitCamera(bool isRecalculate);
+	void InitSkyBox();
 	void InitTerrain();
 
 	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -53,6 +55,8 @@ private:
 	FaultFormationTerrain m_terrain0;
 	MidpointDisplacementTerrain m_terrain1;
 	Camera m_pGameCamera;
+	SkyBox m_skyBox;
+
 
 	GLint bufferWidth;
 	GLint bufferHeight;

@@ -44,7 +44,7 @@ void BaseTerrain::RenderShadowPass(Camera& camera, LightingData& lightingData, G
 
 	glViewport(0, 0, lightingData.shadowMap.GetShadowHeight(), lightingData.shadowMap.GetShadowHeight());
 	lightingData.shadowMap.Write();
-	glClear(GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_DEPTH_BUFFER_BIT);
 
 	lightingData.shadowBox.Init(lightingData.lightViewMatrix, &camera);
 	
@@ -68,8 +68,8 @@ void BaseTerrain::RenderShadowPass(Camera& camera, LightingData& lightingData, G
 void BaseTerrain::RenderBasePass(Camera& camera, LightingData& lightingData, GLint width, GLint height)
 {
 	glViewport(0, 0, width, height);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 vp = camera.CalculateVewMatrix();
 
@@ -103,12 +103,12 @@ void BaseTerrain::RenderBasePass(Camera& camera, LightingData& lightingData, GLi
 
 void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width, GLint height)
 {
-	glFrontFace(GL_CW);
+	/*glFrontFace(GL_CW);
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);*/
 
-	RenderShadowPass(camera, lightingData, width, height);
+	//RenderShadowPass(camera, lightingData, width, height);
 
 	RenderBasePass(camera, lightingData, width, height);
 
@@ -124,8 +124,8 @@ void BaseTerrain::RenderShadowMapPreview(GLint x, GLint y, GLint width, GLint he
 	glEnable(GL_SCISSOR_TEST);
 	glScissor(x, y, width, height);
 
-	glClearColor(0.1f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClearColor(0.1f, 0.0f, 0.0f, 0.0f);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glDisable(GL_SCISSOR_TEST);
 

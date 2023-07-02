@@ -56,10 +56,10 @@ protected:
 	float m_textureScale = 1.0f;
 	Texture* m_pTextures[TEXTURE_COUNT] = { nullptr };
 
-	float h0 = 0.112f;
-	float h1 = 0.183f;
-	float h2 = 0.418f;
-	float h3 = 0.536f;
-	float h4 = 0.841f;
-	float h5 = 0.902f;
+	float h0 = 0.218f;
+	float h1 = 0.249f;
+	float h2 = 0.284f;
+	float h3 = 0.386f;
+	float h4 = 0.560f;
+	float h5 = 0.684;
 };
