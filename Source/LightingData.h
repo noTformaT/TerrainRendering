@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "ShadowMap.h"
+#include "ShadowBox.h"
 
 struct LightingData
 {
@@ -17,9 +18,15 @@ struct LightingData
 
 	ShadowMap shadowMap;
 
+	ShadowBox shadowBox;
+
+	glm::mat4 lightViewMatrix;
+
 	void Init()
 	{
-		shadowMap.Init(1024, 1024);
+		lightViewMatrix = glm::mat4(1.0f);
+
+		shadowMap.Init(2048, 2048);
 
 		float near_plane = 0.0f, far_plane = 300.5f;
 		lightProj = glm::ortho(-128.0f, 128.0f, -128.0f, 128.0f, near_plane, far_plane);

@@ -15,3 +15,6 @@ int CalcNextPowerOfTwo(int x);
 float RandomFloat();
 
 float RandomFloatRange(float start, float end);
+
+#define FOV 45.0f
+#define NEAR_PLANE 0.1f

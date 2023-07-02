@@ -36,7 +36,7 @@ public:
 private:
 	void CreateWindow();
 	void InitCallbacks();
-	void InitCamera();
+	void InitCamera(bool isRecalculate);
 	void InitTerrain();
 
 	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);

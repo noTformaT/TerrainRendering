@@ -12,6 +12,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Util.h"
+
 // windows dimentions
 const GLint WIDTH = 1024, HEIGHT = 768;
 
@@ -32,7 +34,7 @@ void Application::Init()
 {
 	CreateWindow();
 	InitCallbacks();
-	InitCamera();
+	InitCamera(false);
 	InitTerrain();
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -401,7 +403,7 @@ void Application::WindowsResize(int width, int height)
     // Setup viewport size
     glViewport(0, 0, bufferWidth, bufferHeight);
 
-    InitCamera();
+    InitCamera(true);
 }
 
 void Application::CreateWindow()
@@ -491,12 +493,16 @@ void Application::InitCallbacks()
     glfwSetWindowSizeCallback(window, WindowsResizeCallback);
 }
 
-void Application::InitCamera()
+void Application::InitCamera(bool isRecalculate)
 {
-    //m_pGameCamera = Camera(glm::vec3(18.0f, 228, -170.0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
-    m_pGameCamera = Camera(glm::vec3(0, 0, 0), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
+    if (!isRecalculate)
+    {
+        m_pGameCamera = Camera(glm::vec3(18.0f, 228, -170.0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
+        //m_pGameCamera = Camera(glm::vec3(0, 0, 0), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
+    }
+    
 
-    m_pGameCamera.SetProjection(glm::perspective(glm::radians(45.0f), (float)bufferWidth / (float)bufferHeight, 0.1f, 2000.0f));
+    m_pGameCamera.SetProjection(glm::perspective(glm::radians(FOV), (float)bufferWidth / (float)bufferHeight, NEAR_PLANE, 2000.0f));
     //m_pGameCamera.SetProjection(glm::ortho(-20.0f, 20.0f, -(HEIGHT / 2.0f), HEIGHT / 2.0f, 0.0f, 2000.0f));
 }
 
@@ -504,7 +510,7 @@ void Application::InitTerrain()
 {
     lightingData.Init();
 
-    float worldScale = 1.0f;
+    float worldScale = 4.0f;
     float textureScale = 200.0f;
 
     std::vector<std::string> TextureFilenames;

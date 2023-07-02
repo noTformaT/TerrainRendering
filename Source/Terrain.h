@@ -22,6 +22,10 @@ public:
 	//void CreateTriangle();
 
 	void InitTerrain(float worldScale, float textureScale, std::vector<std::string>& textureFileNames);
+
+	void RenderShadowPass(Camera& camera, LightingData& lightingData, GLint width, GLint height);
+	void RenderBasePass(Camera& camera, LightingData& lightingData, GLint width, GLint height);
+
 	void Render(Camera& camera, LightingData& lightingData, GLint width, GLint height);
 
 	void RenderShadowMapPreview(GLint x, GLint y, GLint width, GLint height, LightingData& lightingData);

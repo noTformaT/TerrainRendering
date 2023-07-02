@@ -14,12 +14,12 @@ bool TerrainRenderSystem::Init()
 		return false;
 	}
 
-	if (!AddShader(GL_VERTEX_SHADER, "Shaders/shadow_calc.vs"))
+	if (!AddShader(GL_VERTEX_SHADER, "Shaders/terrain.vs"))
 	{
 		return false;
 	}
 
-	if (!AddShader(GL_FRAGMENT_SHADER, "Shaders/shadow_calc.fs"))
+	if (!AddShader(GL_FRAGMENT_SHADER, "Shaders/terrain.fs"))
 	{
 		return false;
 	}
@@ -29,7 +29,7 @@ bool TerrainRenderSystem::Init()
 		return false;
 	}
 
-	/*m_VPLoc = GetUniformLocation("model");
+	m_VPLoc = GetUniformLocation("model");
 
 	if (m_VPLoc == INVALID_UNIFORM_LOCATION)
 	{
@@ -72,25 +72,25 @@ bool TerrainRenderSystem::Init()
 	m_sunColorLoc = GetUniformLocation("sunColor");
 	m_sunIntencityLoc = GetUniformLocation("sunIntencity");
 	m_useLit = GetUniformLocation("useLit");
-	m_sunDiffuse = GetUniformLocation("sunDiffuse");*/
+	m_sunDiffuse = GetUniformLocation("sunDiffuse");
 
 	Enable();
 
-	m_projectionLoc = GetUniformLocation("projection");
+	/*m_projectionLoc = GetUniformLocation("projection");
 	m_viewLoc = GetUniformLocation("view");
 	m_lightSpaceMatrixLoc = GetUniformLocation("lightSpaceMatrix");
 	m_modelLoc = GetUniformLocation("model");
 	m_shadowMapLoc = GetUniformLocation("shadowMap");
 	
-	glUniform1i(m_shadowMapLoc, 0);
+	glUniform1i(m_shadowMapLoc, 0);*/
 
 	
 
-	/*glUniform1i(m_myTexture1Loc, 0);
+	glUniform1i(m_myTexture1Loc, 0);
 	glUniform1i(m_myTexture2Loc, 1);
 	glUniform1i(m_myTexture3Loc, 2);
 	glUniform1i(m_myTexture4Loc, 3);
-	glUniform1i(m_myTexture5Loc, 4);*/
+	glUniform1i(m_myTexture5Loc, 4);
 
 	return true;
 }

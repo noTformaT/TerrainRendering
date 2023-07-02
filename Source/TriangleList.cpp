@@ -204,8 +204,8 @@ void TriangleList::Vertex::InitVertex(const BaseTerrain* pTerrain, int x, int z)
 	float worldScale = pTerrain->GetWorldScale();
 	float y = pTerrain->GetHeight(x, z);
 	//y = 0;
-	y = 0.1f * y;
-	pos = glm::vec3(-128 + x * worldScale, y, -128 + z * worldScale);
+	//y = 0.1f * y;
+	pos = glm::vec3(x * worldScale, y, z * worldScale);
 	
 	float size = pTerrain->GetTerrainSize();
 

@@ -98,6 +98,9 @@
     <ClCompile Include="Source\ShadowMapViewRenderSystem.cpp">
       <Filter>Source\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ShadowBox.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -152,6 +155,9 @@
       <Filter>Source\Public</Filter>
     </ClInclude>
     <ClInclude Include="Source\ShadowMapViewRenderSystem.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShadowBox.h">
       <Filter>Source\Public</Filter>
     </ClInclude>
   </ItemGroup>

@@ -38,18 +38,19 @@ void BaseTerrain::InitTerrain(float worldScale, float textureScale, std::vector<
 	m_shadowMapViewRender.Init();
 }
 
-void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width, GLint height)
+void BaseTerrain::RenderShadowPass(Camera& camera, LightingData& lightingData, GLint width, GLint height)
 {
-	glFrontFace(GL_CW);
-	glCullFace(GL_BACK);
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
-
 	m_shadowMapRender.Enable();
 
 	glViewport(0, 0, lightingData.shadowMap.GetShadowHeight(), lightingData.shadowMap.GetShadowHeight());
 	lightingData.shadowMap.Write();
 	glClear(GL_DEPTH_BUFFER_BIT);
+
+	lightingData.shadowBox.Init(lightingData.lightViewMatrix, &camera);
+	
+	
+	lightingData.shadowBox.update();
+
 
 	glm::vec3 center = camera.GetPosition();
 
@@ -62,7 +63,10 @@ void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width
 	m_triangleList.Render();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
 
+void BaseTerrain::RenderBasePass(Camera& camera, LightingData& lightingData, GLint width, GLint height)
+{
 	glViewport(0, 0, width, height);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -71,14 +75,18 @@ void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width
 
 	m_terrainRender.Enable();
 
-	glm::mat4 projection = camera.GetProjection();
+	/*glm::mat4 projection = camera.GetProjection();
 	glm::mat4 view = camera.GetView();
+
+	glm::vec3 center = camera.GetPosition();
+	glm::mat4 model(1.0f);
+	glm::mat4 lightTransform = lightingData.CalculateLightTransform(center);
 
 	m_terrainRender.SetModelViewProjection(model, view, projection);
 	m_terrainRender.SetLightSpaceMatrix(lightTransform);
-	lightingData.shadowMap.Read(GL_TEXTURE0);
+	lightingData.shadowMap.Read(GL_TEXTURE0);*/
 
-	/*m_terrainRender.SetVP(vp);
+	m_terrainRender.SetVP(vp);
 	m_terrainRender.SetLevels(h0, h1, h2, h3, h4, h5);
 	m_terrainRender.SetLightingData(lightingData);
 
@@ -88,9 +96,21 @@ void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width
 		{
 			m_pTextures[i]->Bind(GL_TEXTURE0 + i);
 		}
-	}*/
+	}
 
 	m_triangleList.Render();
+}
+
+void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width, GLint height)
+{
+	glFrontFace(GL_CW);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+	RenderShadowPass(camera, lightingData, width, height);
+
+	RenderBasePass(camera, lightingData, width, height);
 
 	//
 
@@ -99,9 +119,6 @@ void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width
 
 void BaseTerrain::RenderShadowMapPreview(GLint x, GLint y, GLint width, GLint height, LightingData& lightingData)
 {
-	//glFrontFace(GL_CCW);
-	//glDisable(GL_CULL_FACE);
-	//glCullFace(GL_FRONT_AND_BACK);
 
 	glViewport(x, y, width, height);
 	glEnable(GL_SCISSOR_TEST);
@@ -114,9 +131,7 @@ void BaseTerrain::RenderShadowMapPreview(GLint x, GLint y, GLint width, GLint he
 
 	m_shadowMapViewRender.Enable();
 
-	//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(m_triangleList.m_vao1);
-
 
 	lightingData.shadowMap.Read(GL_TEXTURE0);
 
