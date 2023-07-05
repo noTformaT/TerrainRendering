@@ -155,8 +155,8 @@ void Application::RenderUI(float dt)
         ImGui::Text("RenderTime: %f(ms)", dt);
         ImGui::Text("FPS: %f", 1.0f / dt);
 
-        ImGui::Text("Terrain width: %f", 256);
-        ImGui::Text("Terrain height: %f", 256);
+        ImGui::Text("Terrain width: %f", 256.0);
+        ImGui::Text("Terrain height: %f", 256.0);
 
         int item;
 

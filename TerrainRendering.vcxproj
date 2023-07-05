@@ -30,6 +30,7 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\DirectionalShadowMapRenderSystem.cpp" />
     <ClCompile Include="Source\FaultFormationTerrain.cpp" />
+    <ClCompile Include="Source\GeoMapGrid.cpp" />
     <ClCompile Include="Source\Image.cpp" />
     <ClCompile Include="Source\LightingData.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\DirectionalShadowMapRenderSystem.h" />
     <ClInclude Include="Source\FaultFormationTerrain.h" />
+    <ClInclude Include="Source\GeoMapGrid.h" />
     <ClInclude Include="Source\Image.h" />
     <ClInclude Include="Source\LightingData.h" />
     <ClInclude Include="Source\MidpointDisplacementTerrain.h" />
