@@ -19,17 +19,26 @@ public:
 	void Render(Camera& camera, GLuint width, GLuint height);
 
 	size_t GetCubemapIndex();
+	size_t GetCubemapCount();
+	std::string GetCubemapName(size_t index);
 	void SetCubemapIndex(size_t index);
 private:
+	struct TexturesData
+	{
+		std::string name;
+		GLuint textureID;
+	};
+
 	bool m_isInit = false;
 
 	GLuint m_VBO = 0;
 	GLuint m_VAO = 0;
-	std::vector<GLint> m_textures;
+	std::vector<TexturesData> m_textures;
 	//GLuint m_cubemapTextureIndex;
 	size_t m_cubemapIndex = 0;
 
 	SkyBoxRenderSystem m_renderSystem;
 
-	GLuint LoadCubemap(std::vector<std::string> faces);
+	void LoadCubemap(std::string name);
+	GLuint LoadCubemaps(std::vector<std::string> faces);
 };

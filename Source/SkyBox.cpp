@@ -10,7 +10,7 @@ SkyBox::~SkyBox()
 {
     for (size_t i = 0; i < m_textures.size(); i++)
     {
-        GLuint texture = m_textures[i];
+        GLuint texture = m_textures[i].textureID;
         glDeleteTextures(1, &texture);
     }
 }
@@ -193,7 +193,7 @@ void SkyBox::Init()
         "Textures/Yokohama/negz.jpg"
     };
 
-    m_textures.push_back(LoadCubemap(cubemap1));
+    /*m_textures.push_back(LoadCubemap(cubemap1));
     m_textures.push_back(LoadCubemap(cubemap2));
     m_textures.push_back(LoadCubemap(cubemap3));
     m_textures.push_back(LoadCubemap(cubemap4));
@@ -203,7 +203,9 @@ void SkyBox::Init()
     m_textures.push_back(LoadCubemap(cubemap8));
     m_textures.push_back(LoadCubemap(cubemap9));
     m_textures.push_back(LoadCubemap(cubemap10));
-    m_textures.push_back(LoadCubemap(cubemap11));
+    m_textures.push_back(LoadCubemap(cubemap11));*/
+
+    LoadCubemap("Yokohama");
     
     m_renderSystem.Enable();
     m_renderSystem.SetInt("skybox", 0);
@@ -234,7 +236,7 @@ void SkyBox::Render(Camera& camera, GLuint width, GLuint height)
 
     glBindVertexArray(m_VAO);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, m_textures[GetCubemapIndex()]);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, m_textures[GetCubemapIndex()].textureID);
     glDrawArrays(GL_TRIANGLES, 0, 108);
 
 	glDepthMask(GL_TRUE);
@@ -245,12 +247,49 @@ size_t SkyBox::GetCubemapIndex()
     return m_cubemapIndex;
 }
 
+size_t SkyBox::GetCubemapCount()
+{
+    return m_textures.size();
+}
+
+std::string SkyBox::GetCubemapName(size_t index)
+{
+    return m_textures[index].name;
+}
+
 void SkyBox::SetCubemapIndex(size_t index)
 {
     m_cubemapIndex = index;
 }
 
-GLuint SkyBox::LoadCubemap(std::vector<std::string> faces)
+void SkyBox::LoadCubemap(std::string name)
+{
+    std::vector<std::string> names
+    {
+        std::string("Textures/") + name + "/posx.jpg",
+        std::string("Textures/") + name + "/negx.jpg",
+        std::string("Textures/") + name + "/posy.jpg",
+        std::string("Textures/") + name + "/negy.jpg",
+        std::string("Textures/") + name + "/posz.jpg",
+        std::string("Textures/") + name + "/negz.jpg"
+        //"Textures/Plants/posx.jpg", // +x
+        //"Textures/Plants/negx.jpg", // -x
+        //"Textures/Plants/posy.jpg",
+        //"Textures/Plants/negy.jpg",
+        //"Textures/Plants/posz.jpg",
+        //"Textures/Plants/negz.jpg"
+    };
+
+    GLuint textureID = LoadCubemaps(names);
+
+    TexturesData data;
+    data.textureID = textureID;
+    data.name = name;
+
+    m_textures.push_back(data);
+}
+
+GLuint SkyBox::LoadCubemaps(std::vector<std::string> faces)
 {
     unsigned int textureID;
     glGenTextures(1, &textureID);

@@ -300,16 +300,18 @@ void Application::RenderUI(float dt)
 
     if (ImGui::CollapsingHeader("Sky sphere"))
     {
-        const char* data[] = { "Cubemap 1", "Cubemap 2", "Cubemap 3", "Cubemap 4", "Cubemap 5", "Cubemap 6", "Cubemap 7", "Cubemap 8", "Cubemap 9", "Cubemap 10", "Cubemap 11" };
+        //const char* data[] = { "Cubemap 1", "Cubemap 2", "Cubemap 3", "Cubemap 4", "Cubemap 5", "Cubemap 6", "Cubemap 7", "Cubemap 8", "Cubemap 9", "Cubemap 10", "Cubemap 11" };
 
-        const char* currentItem = data[m_skyBox.GetCubemapIndex()];
+        std::string temp = m_skyBox.GetCubemapName(m_skyBox.GetCubemapIndex());
+        const char* currentItem = temp.c_str();
 
         if (ImGui::BeginCombo("Cubemap", currentItem))
         {
-            for (size_t i = 0; i < 11; i++)
+            for (size_t i = 0; i < m_skyBox.GetCubemapCount(); i++)
             {
                 bool selectable = i == m_skyBox.GetCubemapIndex();
-                if (ImGui::Selectable(data[i], selectable))
+                temp = m_skyBox.GetCubemapName(i);
+                if (ImGui::Selectable(temp.c_str(), selectable))
                 {
                     m_skyBox.SetCubemapIndex(i);
                 }
