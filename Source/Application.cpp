@@ -184,8 +184,15 @@ void Application::RenderUI(float dt)
             ImGui::EndCombo();
         }
 
-        ImGui::Checkbox("Wireframe", &m_isWireframe);
+        bool prevWireframeVal = m_isWireframe;
+        ImGui::Checkbox("Wireframe", &prevWireframeVal);
         ImGui::Checkbox("Input enable", &m_isToogleInput);
+
+        if (prevWireframeVal != m_isWireframe)
+        {
+            m_isWireframe = prevWireframeVal;
+            UpdateWireframeState();
+        }
 
         ImGui::Text("Camera position:");
         ImGui::Text("%f, %f, %f", pos.x, pos.y, pos.z);
@@ -408,12 +415,7 @@ void Application::KeyboardCB(uint32_t key, int32_t state)
             case GLFW_KEY_C:
                 m_isWireframe = !m_isWireframe;
 
-                if (m_isWireframe) {
-                    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                }
-                else {
-                    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-                }
+                UpdateWireframeState();
                 break;
 
             case GLFW_KEY_T:
@@ -634,4 +636,14 @@ GLfloat Application::GetMouseYChange()
     GLfloat result = yChange;
     yChange = .0f;
     return result;
+}
+
+void Application::UpdateWireframeState()
+{
+    if (m_isWireframe) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
 }

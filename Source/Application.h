@@ -50,6 +50,8 @@ private:
 	GLfloat GetMouseXChange();
 	GLfloat GetMouseYChange();
 
+	void UpdateWireframeState();
+
 private:
 	GLFWwindow* window = nullptr;
 	FaultFormationTerrain m_terrain0;
