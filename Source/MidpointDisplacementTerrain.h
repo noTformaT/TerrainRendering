@@ -10,7 +10,7 @@ public:
 
 	void CreateMidpoinDisplacement(int size, float roughness, float minHeight, float maxHeight);
 
-	int size = 256;
+	int size = 257;
 	float roughness = 1.0f;
 	float minHeight = 0.0f;
 	float maxHeight = 250.0f;

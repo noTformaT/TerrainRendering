@@ -94,10 +94,10 @@ void Application::RenderScene(float dt)
     switch (m_terrainIndex)
     {
     case 0:
-        m_terrain0.Render(m_pGameCamera, lightingData, bufferWidth, bufferHeight);
+        m_terrain0.Render(m_isGeoMappingRender, m_pGameCamera, lightingData, bufferWidth, bufferHeight);
         break;
     case 1:
-        m_terrain1.Render(m_pGameCamera, lightingData, bufferWidth, bufferHeight);
+        m_terrain1.Render(m_isGeoMappingRender, m_pGameCamera, lightingData, bufferWidth, bufferHeight);
         break;
     default:
         break;
@@ -183,6 +183,8 @@ void Application::RenderUI(float dt)
 
             ImGui::EndCombo();
         }
+
+        ImGui::Checkbox("Geomapping Render", &m_isGeoMappingRender);
 
         bool prevWireframeVal = m_isWireframe;
         ImGui::Checkbox("Wireframe", &prevWireframeVal);

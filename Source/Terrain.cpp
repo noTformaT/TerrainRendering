@@ -65,7 +65,7 @@ void BaseTerrain::RenderShadowPass(Camera& camera, LightingData& lightingData, G
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void BaseTerrain::RenderBasePass(Camera& camera, LightingData& lightingData, GLint width, GLint height)
+void BaseTerrain::RenderBasePass(bool isGeoMappingRender, Camera& camera, LightingData& lightingData, GLint width, GLint height)
 {
 	glViewport(0, 0, width, height);
 	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -98,10 +98,17 @@ void BaseTerrain::RenderBasePass(Camera& camera, LightingData& lightingData, GLi
 		}
 	}
 
-	m_triangleList.Render();
+	if (isGeoMappingRender)
+	{
+		m_geoMapGrid.Render();
+	}
+	else
+	{
+		m_triangleList.Render();
+	}
 }
 
-void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width, GLint height)
+void BaseTerrain::Render(bool isGeoMappingRender, Camera& camera, LightingData& lightingData, GLint width, GLint height)
 {
 	/*glFrontFace(GL_CW);
 	glCullFace(GL_BACK);
@@ -110,7 +117,7 @@ void BaseTerrain::Render(Camera& camera, LightingData& lightingData, GLint width
 
 	//RenderShadowPass(camera, lightingData, width, height);
 
-	RenderBasePass(camera, lightingData, width, height);
+	RenderBasePass(isGeoMappingRender, camera, lightingData, width, height);
 
 	//
 
@@ -165,6 +172,7 @@ void BaseTerrain::Destroy()
 {
 	m_heightMap.Destroy();
 	m_triangleList.Destroy();
+	m_geoMapGrid.Destroy();
 }
 
 void BaseTerrain::UpdateLayers(float l0, float l1, float l2, float l3, float l4, float l5)

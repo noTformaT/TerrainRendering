@@ -3,6 +3,7 @@
 #include "Array2D.h"
 #include "TerrainRenderSystem.h"
 #include "TriangleList.h"
+#include "GeoMapGrid.h"
 #include "TestRenderSystem.h"
 #include "Texture.h"
 #include "LightingData.h"
@@ -24,9 +25,9 @@ public:
 	void InitTerrain(float worldScale, float textureScale, std::vector<std::string>& textureFileNames);
 
 	void RenderShadowPass(Camera& camera, LightingData& lightingData, GLint width, GLint height);
-	void RenderBasePass(Camera& camera, LightingData& lightingData, GLint width, GLint height);
+	void RenderBasePass(bool isGeoMappingRender, Camera& camera, LightingData& lightingData, GLint width, GLint height);
 
-	void Render(Camera& camera, LightingData& lightingData, GLint width, GLint height);
+	void Render(bool isGeoMappingRender, Camera& camera, LightingData& lightingData, GLint width, GLint height);
 
 	void RenderShadowMapPreview(GLint x, GLint y, GLint width, GLint height, LightingData& lightingData);
 
@@ -43,9 +44,11 @@ public:
 protected:
 	void LoadHeighMapFile(const char* pFileName);
 
+	int m_patchSize = 33;
 	int m_terrainSize = 0;
 	Array2D<float> m_heightMap;
 	TriangleList m_triangleList;
+	GeoMapGrid m_geoMapGrid;
 	DirectionalShadowMapRenderSystem m_shadowMapRender;
 	TerrainRenderSystem m_terrainRender;
 	TestRenderSystem m_testRender;

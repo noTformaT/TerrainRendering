@@ -10,7 +10,7 @@ public:
 
 	void CreateFaultFormation(int terrainSize, int iterations, float minHeight, float maxHeight, float filter);
 
-	int size = 256;
+	int size = 257;
 	int iterration = 500;
 	float minHeight = 0.0f;
 	float maxHeight = 300.0f;

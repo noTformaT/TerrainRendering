@@ -224,7 +224,7 @@ void GeoMapGrid::CalcNormals(std::vector<Vertex>& vertices, std::vector<unsigned
 				unsigned int Index2 = baseVertex + indices[i + 2];
 				glm::vec3 v1 = vertices[Index1].pos - vertices[Index0].pos;
 				glm::vec3 v2 = vertices[Index2].pos - vertices[Index0].pos;
-				glm::vec3 Normal = glm::cross(v1, v2);
+				glm::vec3 Normal = glm::cross(v2, v1);
 				Normal = glm::normalize(Normal);
 
 				vertices[Index0].normal += Normal;

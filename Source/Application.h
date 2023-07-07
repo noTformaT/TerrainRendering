@@ -82,5 +82,7 @@ private:
 
 	int m_terrainIndex = 0;
 
+	bool m_isGeoMappingRender = false;
+
 };
 
