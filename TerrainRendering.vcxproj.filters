@@ -110,6 +110,9 @@
     <ClCompile Include="Source\GeoMapGrid.cpp">
       <Filter>Source\Private</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LODManager.cpp">
+      <Filter>Source\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -176,6 +179,9 @@
       <Filter>Source\Public</Filter>
     </ClInclude>
     <ClInclude Include="Source\GeoMapGrid.h">
+      <Filter>Source\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LODManager.h">
       <Filter>Source\Public</Filter>
     </ClInclude>
   </ItemGroup>

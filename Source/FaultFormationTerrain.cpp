@@ -28,7 +28,7 @@ void FaultFormationTerrain::CreateFaultFormation(int terrainSize, int iterations
 	m_heightMap.Normalize(minHeight, maxHeight);
 
 	m_triangleList.CreateTriangleList(terrainSize, terrainSize, this);
-	m_geoMapGrid.CreateGeomapGrid(terrainSize, terrainSize, m_patchSize, this);
+	m_geoMapGrid.CreateGeomapGrid(terrainSize, terrainSize, 33, this);
 }
 
 void FaultFormationTerrain::CreateFaultFormationInternal(int iterations, float minHeight, float maxHeight, float filter)

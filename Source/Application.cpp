@@ -335,6 +335,15 @@ void Application::RenderUI(float dt)
         }
     }
 
+    if (m_terrainIndex == 0)
+    {
+        m_terrain0.RenderLODSettings();
+    }
+    else
+    {
+        m_terrain1.RenderLODSettings();
+    }
+
     ImGui::End();
 
     if (m_terrainIndex == 0)
@@ -536,12 +545,12 @@ void Application::InitCamera(bool isRecalculate)
 {
     if (!isRecalculate)
     {
-        m_pGameCamera = Camera(glm::vec3(18.0f, 228, -170.0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
+        m_pGameCamera = Camera(glm::vec3(18.0f, 228, -170.0f), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 200.0f, 0.3f);
         //m_pGameCamera = Camera(glm::vec3(0, 0, 0), glm::vec3(.0f, 1.0f, .0f), -0.0f, 0.0f, 50.0f, 0.3f);
     }
     
 
-    m_pGameCamera.SetProjection(glm::perspective(glm::radians(FOV), (float)bufferWidth / (float)bufferHeight, NEAR_PLANE, 2000.0f));
+    m_pGameCamera.SetProjection(glm::perspective(glm::radians(FOV), (float)bufferWidth / (float)bufferHeight, NEAR_PLANE, FAR_PLANE));
     //m_pGameCamera.SetProjection(glm::ortho(-20.0f, 20.0f, -(HEIGHT / 2.0f), HEIGHT / 2.0f, 0.0f, 2000.0f));
 }
 

@@ -29,6 +29,8 @@ public:
 
 	void Render(bool isGeoMappingRender, Camera& camera, LightingData& lightingData, GLint width, GLint height);
 
+	void RenderLODSettings();
+
 	void RenderShadowMapPreview(GLint x, GLint y, GLint width, GLint height, LightingData& lightingData);
 
 	void LoadFromFile(const char* pFileName);

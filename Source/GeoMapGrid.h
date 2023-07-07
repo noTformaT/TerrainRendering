@@ -4,6 +4,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+#include "LODManager.h"
+
 class BaseTerrain;
 
 class GeoMapGrid
@@ -16,7 +18,8 @@ public:
 
 	void Destroy();
 	
-	void Render();
+	void Render(glm::vec3& cameraPos);
+	void RenderSettings();
 
 private:
 	struct Vertex
@@ -30,16 +33,44 @@ private:
 
 	void CreateGLState();
 	void PopulateBuffers(const BaseTerrain* pTerrain);
-	void InitIndices(std::vector<unsigned int>& indices);
+	int InitIndices(std::vector<unsigned int>& indices);
+	int InitIndicesLOD(int index, std::vector<unsigned int>& indices, int lod);
+	int InitIndicesLODSingle(int index, std::vector<unsigned int>& indices, int lodCore, int lodLeft, int lodRight, int lodTop, int lodBottom);
+	//unsigned int AddTriangle(unsigned int index, std::vector<unsigned int>& indices, unsigned int v1, unsigned int v2, unsigned int v3);
 	void InitVertices(const BaseTerrain* pTerrain, std::vector<Vertex>& vertices);
 	void CalcNormals(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices);
 
 	unsigned int AddTriangle(unsigned int index, std::vector<unsigned int>& indices, unsigned int v1, unsigned int v2, unsigned int v3);
+	unsigned int CreateTriangleFan(int index, std::vector<unsigned int>& indices, int lodCore, int lodLeft, int lodRight, int lodTop, int lodBottom, int x, int z);
 
 	int m_width = 0;
 	int m_depth = 0;
 	int m_patchSize = 0;
+	int m_maxLOD = 0;
 	GLuint m_vao = 0;
 	GLuint m_vb = 0;
 	GLuint m_ib = 0;
+
+	struct SingleLODInfo
+	{
+		int start = 0;
+		int count = 0;
+	};
+
+#define LEFT 2
+#define RIGHT 2
+#define TOP 2
+#define BOTTOM 2
+
+	struct LODInfo
+	{
+		SingleLODInfo info[LEFT][RIGHT][TOP][BOTTOM];
+	};
+
+	std::vector<LODInfo> m_LODInfo;
+	int m_numPatchesX = 0;
+	int m_numPatchesZ = 0;
+	LODManager m_lodManager;
+
+	int CalcNumIndices();
 };

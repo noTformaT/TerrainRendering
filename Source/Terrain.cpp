@@ -100,7 +100,8 @@ void BaseTerrain::RenderBasePass(bool isGeoMappingRender, Camera& camera, Lighti
 
 	if (isGeoMappingRender)
 	{
-		m_geoMapGrid.Render();
+		glm::vec3 camPos = camera.GetPosition();
+		m_geoMapGrid.Render(camPos);
 	}
 	else
 	{
@@ -122,6 +123,11 @@ void BaseTerrain::Render(bool isGeoMappingRender, Camera& camera, LightingData& 
 	//
 
 	//RenderShadowMapPreview(width - 256, height - 256, 256, 256, lightingData);
+}
+
+void BaseTerrain::RenderLODSettings()
+{
+	m_geoMapGrid.RenderSettings();
 }
 
 void BaseTerrain::RenderShadowMapPreview(GLint x, GLint y, GLint width, GLint height, LightingData& lightingData)

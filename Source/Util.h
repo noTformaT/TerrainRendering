@@ -18,3 +18,6 @@ float RandomFloatRange(float start, float end);
 
 #define FOV 45.0f
 #define NEAR_PLANE 0.1f
+#define FAR_PLANE 2000.0f
+
+#define powi(base,exp) (int)powf((float)(base), (float)(exp))
